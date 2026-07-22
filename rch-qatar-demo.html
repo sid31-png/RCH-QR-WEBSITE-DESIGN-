@@ -36,10 +36,18 @@
   --r-btn:8px;
   --r-card:12px;
   --r-lg:16px;
-  /* Shadow — rare, subtle, navy-tinted */
-  --shadow-sm:0 1px 2px rgba(26,58,92,.06);
-  --shadow-md:0 8px 30px rgba(26,58,92,.08);
-  --shadow-lg:0 24px 60px rgba(26,58,92,.12);
+  /* Shadow — rare, subtle, navy-tinted, layered for depth */
+  --shadow-xs:0 1px 2px rgba(26,58,92,.05);
+  --shadow-sm:0 1px 2px rgba(26,58,92,.06),0 2px 6px rgba(26,58,92,.05);
+  --shadow-md:0 2px 6px rgba(26,58,92,.05),0 14px 34px rgba(26,58,92,.10);
+  --shadow-lg:0 6px 14px rgba(26,58,92,.08),0 30px 70px rgba(26,58,92,.14);
+  --shadow-plane:0 5px 6px rgba(26,58,92,.30),0 2px 2px rgba(168,30,84,.35);
+  /* Faceted paper-plane logo (Qatar magenta, two-tone fold) */
+  --plane-light:#E0417D;
+  --plane:#D6286B;
+  --plane-dark:#A81E54;
+  --plane-accent:#F4B93E;   /* tiny keel accent from the brand logo */
+  --plane-accent2:#2FB6D6;
   /* Type & rhythm */
   --font:"Inter","Noto Sans Arabic",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
   --maxw:1200px;
@@ -90,14 +98,18 @@ img{max-width:100%;display:block}
 [dir="rtl"] .btn--primary:hover .pplane{transform:scaleX(-1) translate(3px,-2px) rotate(-6deg)}
 
 /* ============ Scroll progress + flying paper plane ============ */
-#rch-progress{position:fixed;inset-block-start:0;inset-inline:0;height:2px;z-index:120;pointer-events:none}
-#rch-progress .track{position:absolute;inset:0;background:linear-gradient(90deg,var(--magenta),var(--magenta) 100%);
-  transform-origin:left center;transform:scaleX(0)}
+#rch-progress{position:fixed;inset-block-start:0;inset-inline:0;height:3px;z-index:120;pointer-events:none}
+#rch-progress .track{position:absolute;inset-block:0;inset-inline:0;height:3px;
+  background:linear-gradient(90deg,var(--plane-dark),var(--magenta));
+  transform-origin:left center;transform:scaleX(0);border-end-end-radius:2px;border-start-end-radius:2px}
 [dir="rtl"] #rch-progress .track{transform-origin:right center}
-#rch-progress .plane{position:absolute;inset-block-start:-9px;inset-inline-start:0;color:var(--magenta);
-  transform:translateX(-50%);filter:drop-shadow(0 2px 4px rgba(214,40,107,.35))}
-#rch-progress .plane svg{width:20px;height:20px;display:block}
-[dir="rtl"] #rch-progress .plane svg{transform:scaleX(-1)}
+/* .plane = position carriage (set by JS along the bar); .plane__craft = flight attitude */
+#rch-progress .plane{position:absolute;inset-block-start:2px;inset-inline-start:0;
+  transform:translateX(-50%);will-change:inset-inline-start}
+#rch-progress .plane__craft{display:block;transform-origin:50% 50%;will-change:transform;
+  filter:drop-shadow(var(--shadow-plane))}
+#rch-progress .plane__svg{width:26px;height:26px;display:block}
+[dir="rtl"] #rch-progress .plane__svg{transform:scaleX(-1)}
 
 /* ============ Nav ============ */
 .nav{position:sticky;inset-block-start:0;z-index:100;background:rgba(255,255,255,.72);
@@ -106,7 +118,13 @@ img{max-width:100%;display:block}
 .nav.is-scrolled{border-color:var(--line)}
 .nav__inner{display:flex;align-items:center;gap:24px;height:64px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em;font-size:1.15rem;color:var(--navy)}
-.brand .mark{width:26px;height:26px;color:var(--magenta)}
+.brand .mark{width:28px;height:28px;flex:none;filter:drop-shadow(0 2px 3px rgba(26,58,92,.20));
+  transition:transform .45s var(--ease)}
+.brand:hover .mark{transform:translate(2px,-2px) rotate(-6deg)}
+[dir="rtl"] .brand .mark{transform:scaleX(-1)}
+[dir="rtl"] .brand:hover .mark{transform:scaleX(-1) translate(2px,-2px) rotate(6deg)}
+.brand__suffix{color:var(--muted);font-weight:500}
+.footer .brand .mark{filter:drop-shadow(0 2px 4px rgba(0,0,0,.30))}
 .nav__links{display:flex;gap:6px;margin-inline-start:auto}
 .nav__links a{font-size:.9rem;font-weight:500;color:var(--navy);padding:8px 12px;border-radius:8px;transition:color .2s,background .2s}
 .nav__links a:hover{color:var(--magenta);background:var(--gray-50)}
@@ -311,31 +329,115 @@ img{max-width:100%;display:block}
   padding:7px 13px;border-radius:999px;cursor:pointer}
 .democtl button.on{background:var(--navy);color:#fff}
 
-/* Reduced motion — kill everything */
+/* =========================================================================
+   REALISM & DEPTH LAYER
+   Separable override block — lifts the flat mock toward a soft, dimensional,
+   high-end feel while keeping the Apple + RCH sobriety. In production this
+   whole block can move to the end of rch-redesign.css unchanged.
+   ========================================================================= */
+
+/* Typographic hierarchy — stronger contrast, tighter display tracking */
+.hero__title{letter-spacing:-.035em}
+.shead h2,.mv__card h3,.why__panel h2{letter-spacing:-.028em}
+.eyebrow{color:var(--magenta);opacity:.95}
+.lead,.hero__sub{font-weight:400}
+.stat__num,.hero__title,.shead h2{text-wrap:balance}
+
+/* Page gets the faintest cool vignette so white sections read as surfaces, not void */
+body{background:
+  radial-gradient(120% 80% at 50% -10%, #fbfcfe 0%, var(--white) 46%) no-repeat,
+  var(--white);}
+
+/* Cards: subtle top-lit gradient surface + resting elevation + crisper hover */
+.mv__card,.rapid__card,.svc__card,.case,.post,.cert,.why__fact{
+  background-image:linear-gradient(180deg,#ffffff 0%,#fcfcfe 100%);
+  box-shadow:var(--shadow-xs);
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease);
+}
+.mv__card:hover,.svc__card:hover,.case:hover,.post:hover{box-shadow:var(--shadow-lg)}
+.rapid__card:hover{box-shadow:var(--shadow-md)}
+
+/* Dark surfaces get a soft top sheen + depth instead of pure flat navy */
+.mv__card--dark,.why__panel,.case__top,.ceo__avatar{
+  background-image:linear-gradient(160deg,#21486f 0%,var(--navy) 42%,var(--navy-900) 100%);
+  position:relative;isolation:isolate;
+}
+.mv__card--dark::before,.why__panel::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
+  background:radial-gradient(90% 60% at 12% 0%, rgba(255,255,255,.10), transparent 60%);
+}
+.mv__card--dark,.why__panel{box-shadow:var(--shadow-md)}
+
+/* Primary CTA: gentle vertical sheen + resting magenta-tinted shadow */
+.btn--primary{
+  background-image:linear-gradient(180deg,#e0417d 0%,var(--magenta) 55%,#c9245f 100%);
+  box-shadow:0 1px 2px rgba(168,30,84,.30),0 8px 18px rgba(214,40,107,.22);
+}
+.btn--primary:hover{box-shadow:0 2px 4px rgba(168,30,84,.34),0 14px 30px rgba(214,40,107,.30)}
+.btn--ghost{background-image:linear-gradient(180deg,#fff,#fbfbfd);box-shadow:var(--shadow-xs)}
+
+/* Nav: a touch more presence when scrolled */
+.nav.is-scrolled{background:rgba(255,255,255,.82);box-shadow:0 1px 0 rgba(26,58,92,.04),0 8px 24px rgba(26,58,92,.06)}
+
+/* Service & value icons: soft dimensional chip */
+.svc__ic,.rapid__l{
+  background-image:linear-gradient(160deg,rgba(214,40,107,.16),rgba(214,40,107,.06));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 10px rgba(214,40,107,.10);
+}
+
+/* Case & blog media: richer, more photographic placeholder surfaces */
+.case__top{background-image:
+  radial-gradient(120% 100% at 100% 0%, rgba(214,40,107,.30), transparent 55%),
+  linear-gradient(160deg,#21486f,var(--navy-900));}
+.post__img{background-image:linear-gradient(180deg,#eef1f6,#e7ebf2)}
+.post__img::after{opacity:.9}
+
+/* Stat numbers: hairline weight lift for hierarchy */
+.stat__num{font-variant-numeric:tabular-nums}
+
+/* Focus ring stays crisp above the new surfaces */
+:focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+
+/* Reduced motion — kill everything (incl. the flying plane: static attitude only) */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .rv{opacity:1;transform:none}
+  #rch-progress .plane__craft{transform:none!important}
 }
 .reduced .marquee__row{animation:none}
 .reduced .rv{opacity:1;transform:none;transition:none}
+.reduced #rch-progress .plane__craft{transform:none!important}
 </style>
 </head>
 <body>
 
-<!-- Scroll progress + paper plane -->
+<!-- ============ RCH faceted paper-plane logo (single source, reused via <use>) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="rch-plane" viewBox="0 0 24 24">
+    <!-- lower keel accent (tiny, from the brand logo) -->
+    <path d="M11 13 8.6 16.6 12 15.2z" fill="var(--plane-accent)"/>
+    <path d="M11 13 12 15.2 12.9 14.1z" fill="var(--plane-accent2)"/>
+    <!-- dark fold (underside) -->
+    <path d="M22 2 11 13 15 22z" fill="var(--plane-dark)"/>
+    <!-- light wing (topside) -->
+    <path d="M22 2 2 9 11 13z" fill="var(--plane-light)"/>
+    <!-- crease highlight -->
+    <path d="M22 2 11 13" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="1" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<!-- Scroll progress + flying paper plane -->
 <div id="rch-progress" aria-hidden="true">
   <div class="track"></div>
-  <div class="plane">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
-  </div>
+  <div class="plane"><span class="plane__craft"><svg class="plane__svg"><use href="#rch-plane"/></svg></span></div>
 </div>
 
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
   <div class="wrap nav__inner">
     <a class="brand" href="#top" aria-label="RCH Qatar home">
-      <svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
-      RCH<span style="color:var(--muted);font-weight:500"> Qatar</span>
+      <svg class="mark" aria-hidden="true"><use href="#rch-plane"/></svg>
+      RCH<span class="brand__suffix"> Qatar</span>
     </a>
     <nav class="nav__links" aria-label="Primary">
       <a href="#about">About</a>
@@ -600,7 +702,7 @@ img{max-width:100%;display:block}
   <div class="wrap">
     <div class="footer__grid">
       <div>
-        <a class="brand" href="#top"><svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg> RCH Qatar</a>
+        <a class="brand" href="#top"><svg class="mark" aria-hidden="true"><use href="#rch-plane"/></svg> RCH Qatar</a>
         <p class="footer__tag">Local knowledge, global reach. Your strategic partner for PRO services and company formation in Qatar.</p>
       </div>
       <div><h5>Services</h5><ul>
@@ -643,19 +745,69 @@ img{max-width:100%;display:block}
   var onScroll = function(){ nav.classList.toggle("is-scrolled", window.scrollY > 8); };
   onScroll(); window.addEventListener("scroll", onScroll, {passive:true});
 
-  // Scroll progress + flying paper plane
+  // Scroll progress + flying paper plane.
+  // progress() keeps its original job (track fill + horizontal carriage position).
+  // A separate rAF "flight" loop layers the attitude: banking with scroll velocity,
+  // pitch, a speed-scaled flutter, and a settle-to-rest when the scroll stops.
   var track = document.querySelector("#rch-progress .track");
   var plane = document.querySelector("#rch-progress .plane");
+  var craft = document.querySelector("#rch-progress .plane__craft");
+  var pTarget = 0;
+
   function progress(){
     var h = document.documentElement;
     var max = h.scrollHeight - h.clientHeight;
     var p = max > 0 ? h.scrollTop / max : 0;
-    var rtl = document.documentElement.dir === "rtl";
+    pTarget = p;
     track.style.transform = "scaleX(" + p + ")";
     plane.style.insetInlineStart = (p*100) + "%";
+    startFlight();
   }
+
+  // --- flight attitude loop (skipped entirely under reduced motion) ---
+  var flying=false, rafF=null, lastT=0, lastP=0, vel=0, bank=0, pitch=0, phase=0, idleT=0;
+  function isReduced(){ return reduce || document.body.classList.contains("reduced"); }
+  function flight(now){
+    if(!craft || isReduced()){ if(craft) craft.style.transform="translateY(0)"; flying=false; rafF=null; return; }
+    var dt = Math.min((now-lastT)/1000, 0.05) || 0.016; lastT = now;
+    var dp = pTarget - lastP; lastP = pTarget;
+    var instVel = dp / dt;                       // progress units per second (signed)
+    vel += (instVel - vel) * 0.2;                // smooth
+    var speed = Math.abs(vel);
+    var rtl = document.documentElement.dir === "rtl";
+    var dir = rtl ? -1 : 1;                       // mirror banking when the craft is flipped
+
+    var bankTarget  = Math.max(-22, Math.min(22, vel * 900));   // lean into the direction
+    var pitchTarget = Math.max(-14, Math.min(14, -vel * 620));  // nose down descending, up ascending
+    bank  += (bankTarget  - bank)  * 0.12;
+    pitch += (pitchTarget - pitch) * 0.10;
+
+    var amp = Math.min(speed * 130, 1);          // flutter grows with speed, 0 at rest
+    phase += dt * (7 + speed * 110);
+    var bob = Math.sin(phase) * (0.4 + amp * 2.4);
+    var flr = Math.sin(phase * 1.3) * amp * 3;   // flutter roll
+
+    craft.style.transform =
+      "perspective(240px) rotateX(" + pitch + "deg) rotateZ(" + ((bank + flr) * dir) + "deg) translateY(" + bob + "px)";
+
+    // settle to rest, then stop the loop until the next scroll
+    if(speed < 0.0005 && Math.abs(bank) < 0.25 && Math.abs(pitch) < 0.25){
+      idleT += dt;
+      if(idleT > 0.55){ craft.style.transform = "translateY(0)"; flying=false; rafF=null; return; }
+    } else { idleT = 0; }
+    rafF = requestAnimationFrame(flight);
+  }
+  function startFlight(){
+    if(flying || isReduced() || !craft) return;
+    flying = true; lastT = performance.now(); lastP = pTarget; idleT = 0;
+    rafF = requestAnimationFrame(flight);
+  }
+
   progress(); window.addEventListener("scroll", progress, {passive:true});
   window.addEventListener("resize", progress);
+  document.addEventListener("visibilitychange", function(){
+    if(document.hidden && rafF){ cancelAnimationFrame(rafF); flying=false; rafF=null; }
+  });
 
   // Reveal on scroll — JS adds .in, never touches source HTML structure
   var revealEls = [].slice.call(document.querySelectorAll(".rv"));
