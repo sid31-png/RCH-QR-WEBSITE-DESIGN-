@@ -1,0 +1,8 @@
+# Inspiration inputs (not deliverables) — kept out of git to avoid bloat
+reference/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
