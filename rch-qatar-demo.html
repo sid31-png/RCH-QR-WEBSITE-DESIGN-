@@ -16,44 +16,68 @@
    Here they are self-contained so the design can be previewed as one page.
    ========================================================================= */
 :root{
-  /* Brand */
-  --navy:#1A3A5C;
-  --navy-700:#15304c;
-  --navy-900:#0f2338;
-  --magenta:#D6286B;
-  --magenta-600:#c01f5e;
+  /* ---- Accents aligned to RCH Saudi ---- */
+  --accent:#AF1882;          /* Saudi magenta-violet — single brand accent */
+  --accent-600:#8f1468;
+  --indigo:#293d81;          /* Saudi secondary — rich panels */
+  --indigo-700:#1f2e63;
+  /* Legacy names kept, re-pointed, so existing rules adopt the new palette.
+     Text/border/muted are CONTEXT vars: flipped inside .section--dark. */
+  --magenta:var(--accent);
+  --magenta-600:var(--accent-600);
   --white:#FFFFFF;
-  --gray-50:#F5F5F7;
-  --gray-200:#E5E5EA;
-  --gray-500:#86868B;
-  /* Derived */
-  --ink:var(--navy);
-  --muted:var(--gray-500);
-  --line:var(--gray-200);
-  --bg:var(--white);
-  --bg-subtle:var(--gray-50);
+  --black:#0A0D12;           /* Saudi near-black (the "noir" of the B&W scheme) */
+  --black-800:#111726;
+  --navy:var(--ink);         /* legacy alias -> current context ink */
+  --navy-700:#141a2a;
+  --navy-900:#0b0f16;
+  --gray-50:#f5f7ff;
+  --gray-200:var(--line);
+  --gray-500:var(--muted);
+  /* ---- Context (LIGHT default) ---- */
+  --surface:#FFFFFF;         /* section background */
+  --surface-2:#f5f7ff;
+  --ink:#0A0D12;             /* body text */
+  --muted:#535862;           /* secondary text */
+  --line:#e6e8f0;            /* borders */
+  --card:#FFFFFF;            /* card background */
+  --card-grad:linear-gradient(180deg,#ffffff 0%,#fbfcfe 100%);
+  --bg:var(--surface);
+  --bg-subtle:var(--surface-2);
   /* Radius */
   --r-btn:8px;
   --r-card:12px;
   --r-lg:16px;
-  /* Shadow — rare, subtle, navy-tinted, layered for depth */
-  --shadow-xs:0 1px 2px rgba(26,58,92,.05);
-  --shadow-sm:0 1px 2px rgba(26,58,92,.06),0 2px 6px rgba(26,58,92,.05);
-  --shadow-md:0 2px 6px rgba(26,58,92,.05),0 14px 34px rgba(26,58,92,.10);
-  --shadow-lg:0 6px 14px rgba(26,58,92,.08),0 30px 70px rgba(26,58,92,.14);
-  --shadow-plane:0 5px 6px rgba(26,58,92,.30),0 2px 2px rgba(168,30,84,.35);
-  /* Faceted paper-plane logo (Qatar magenta, two-tone fold) */
-  --plane-light:#E0417D;
-  --plane:#D6286B;
-  --plane-dark:#A81E54;
+  /* Shadow — layered, near-black tinted */
+  --shadow-xs:0 1px 2px rgba(10,13,18,.05);
+  --shadow-sm:0 1px 2px rgba(10,13,18,.06),0 2px 6px rgba(10,13,18,.05);
+  --shadow-md:0 2px 6px rgba(10,13,18,.06),0 14px 34px rgba(10,13,18,.12);
+  --shadow-lg:0 6px 14px rgba(10,13,18,.10),0 30px 70px rgba(10,13,18,.16);
+  --shadow-plane:0 6px 8px rgba(10,13,18,.30),0 2px 3px rgba(143,20,104,.35);
+  /* Faceted paper-plane logo — Saudi accent two-tone */
+  --plane-light:#c72e9c;
+  --plane:#AF1882;
+  --plane-dark:#7d1259;
   --plane-accent:#F4B93E;   /* tiny keel accent from the brand logo */
   --plane-accent2:#2FB6D6;
   /* Type & rhythm */
-  --font:"Inter","Noto Sans Arabic",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+  --font:"Inter","Noto Sans Arabic","Noto Sans SC",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
   --maxw:1200px;
   --gutter:clamp(20px,5vw,48px);
   --section-y:clamp(64px,9vw,128px);
   --ease:cubic-bezier(.22,.61,.36,1);
+}
+/* ---- Context (DARK sections: near-black surfaces, white text) ---- */
+.section--dark,.footer{
+  --surface:#0A0D12;
+  --surface-2:#111726;
+  --ink:#FFFFFF;
+  --muted:#9aa6b6;
+  --line:rgba(255,255,255,.14);
+  --card:#121826;
+  --card-grad:linear-gradient(180deg,#141a2a 0%,#0f1420 100%);
+  background:var(--surface);
+  color:var(--ink);
 }
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -89,27 +113,20 @@ img{max-width:100%;display:block}
   white-space:nowrap;
 }
 .btn--primary{background:var(--magenta);color:#fff}
-.btn--primary:hover{background:var(--magenta-600);transform:translateY(-1px);box-shadow:0 10px 24px rgba(214,40,107,.28)}
+.btn--primary:hover{background:var(--magenta-600);transform:translateY(-1px);box-shadow:0 10px 24px rgba(175,24,130,.28)}
 .btn--ghost{background:transparent;color:var(--navy);border-color:var(--line)}
-.btn--ghost:hover{border-color:var(--navy);background:#fff;transform:translateY(-1px)}
+.btn--ghost:hover{border-color:var(--navy);background:var(--card);transform:translateY(-1px)}
 .btn .pplane{width:16px;height:16px;transition:transform .3s var(--ease)}
 .btn--primary:hover .pplane{transform:translate(3px,-2px) rotate(6deg)}
 [dir="rtl"] .btn .pplane{transform:scaleX(-1)}
 [dir="rtl"] .btn--primary:hover .pplane{transform:scaleX(-1) translate(3px,-2px) rotate(-6deg)}
 
-/* ============ Scroll progress + flying paper plane ============ */
-#rch-progress{position:fixed;inset-block-start:0;inset-inline:0;height:3px;z-index:120;pointer-events:none}
-#rch-progress .track{position:absolute;inset-block:0;inset-inline:0;height:3px;
-  background:linear-gradient(90deg,var(--plane-dark),var(--magenta));
+/* ============ Scroll progress (neutral thin bar — no plane) ============ */
+#rch-progress{position:fixed;inset-block-start:0;inset-inline:0;height:2px;z-index:120;pointer-events:none}
+#rch-progress .track{position:absolute;inset-block:0;inset-inline:0;height:2px;
+  background:var(--accent);
   transform-origin:left center;transform:scaleX(0);border-end-end-radius:2px;border-start-end-radius:2px}
 [dir="rtl"] #rch-progress .track{transform-origin:right center}
-/* .plane = position carriage (set by JS along the bar); .plane__craft = flight attitude */
-#rch-progress .plane{position:absolute;inset-block-start:2px;inset-inline-start:0;
-  transform:translateX(-50%);will-change:inset-inline-start}
-#rch-progress .plane__craft{display:block;transform-origin:50% 50%;will-change:transform;
-  filter:drop-shadow(var(--shadow-plane))}
-#rch-progress .plane__svg{width:26px;height:26px;display:block}
-[dir="rtl"] #rch-progress .plane__svg{transform:scaleX(-1)}
 
 /* ============ Nav ============ */
 .nav{position:sticky;inset-block-start:0;z-index:100;background:rgba(255,255,255,.72);
@@ -118,7 +135,7 @@ img{max-width:100%;display:block}
 .nav.is-scrolled{border-color:var(--line)}
 .nav__inner{display:flex;align-items:center;gap:24px;height:64px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em;font-size:1.15rem;color:var(--navy)}
-.brand .mark{width:28px;height:28px;flex:none;filter:drop-shadow(0 2px 3px rgba(26,58,92,.20));
+.brand .mark{width:28px;height:28px;flex:none;filter:drop-shadow(0 2px 3px rgba(10,13,18,.20));
   transition:transform .45s var(--ease)}
 .brand:hover .mark{transform:translate(2px,-2px) rotate(-6deg)}
 [dir="rtl"] .brand .mark{transform:scaleX(-1)}
@@ -129,10 +146,26 @@ img{max-width:100%;display:block}
 .nav__links a{font-size:.9rem;font-weight:500;color:var(--navy);padding:8px 12px;border-radius:8px;transition:color .2s,background .2s}
 .nav__links a:hover{color:var(--magenta);background:var(--gray-50)}
 .nav__side{display:flex;align-items:center;gap:14px}
-.lang{display:flex;gap:2px;background:var(--gray-50);border-radius:999px;padding:3px}
-.lang button{border:0;background:transparent;font:inherit;font-size:.78rem;font-weight:500;color:var(--muted);
-  padding:5px 11px;border-radius:999px;cursor:pointer;transition:.2s}
-.lang button[aria-pressed="true"]{background:#fff;color:var(--navy);box-shadow:var(--shadow-sm)}
+/* Language switcher (dropdown: AR · EN · RU · FR · 中文) */
+.lang{position:relative}
+.lang__btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--card);
+  font:inherit;font-size:.82rem;font-weight:500;color:var(--navy);padding:7px 11px;border-radius:999px;
+  cursor:pointer;transition:border-color .2s,background .2s}
+.lang__btn:hover{border-color:var(--navy)}
+.lang__btn .globe{width:15px;height:15px;color:var(--muted)}
+.lang__btn .chev{width:12px;height:12px;color:var(--muted);transition:transform .25s var(--ease)}
+.lang[aria-expanded="true"] .lang__btn .chev{transform:rotate(180deg)}
+.lang__cur{min-width:1.4em;text-align:center}
+.lang__menu{position:absolute;inset-block-start:calc(100% + 8px);inset-inline-end:0;min-width:168px;margin:0;padding:6px;
+  list-style:none;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);
+  display:none;z-index:140}
+.lang[aria-expanded="true"] .lang__menu{display:block}
+.lang__menu li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;border-radius:8px;
+  font-size:.9rem;color:var(--navy);cursor:pointer;transition:background .15s}
+.lang__menu li:hover{background:var(--surface-2)}
+.lang__menu li[aria-selected="true"]{color:var(--magenta);font-weight:600}
+.lang__menu li .tag{font-size:.72rem;color:var(--muted);font-weight:500}
+.lang__menu li[aria-selected="true"] .tag{color:var(--magenta)}
 .nav__burger{display:none;border:0;background:transparent;cursor:pointer;color:var(--navy);padding:6px}
 @media(max-width:1024px){
   .nav__links{display:none}
@@ -152,22 +185,35 @@ img{max-width:100%;display:block}
 .stat__num{font-size:clamp(1.7rem,3.2vw,2.6rem);font-weight:600;color:var(--navy);letter-spacing:-.03em;line-height:1}
 .stat__num .u{color:var(--magenta)}
 .stat__label{margin-block-start:8px;font-size:.85rem;color:var(--muted);max-width:16ch}
-.hero__visual{position:relative;aspect-ratio:1/1;min-height:340px}
-#rch-logo-3d{position:absolute;inset:0;width:100%;height:100%}
-#rch-logo-3d canvas{display:block;width:100%!important;height:100%!important}
-.hero__visual .halo{position:absolute;inset:6% 6% auto 6%;aspect-ratio:1;border-radius:50%;
-  background:radial-gradient(circle at 50% 40%,rgba(214,40,107,.12),transparent 62%);filter:blur(6px);z-index:-1}
-.hero__fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center}
-.hero__fallback img{width:min(58%,260px);height:auto;filter:drop-shadow(0 20px 40px rgba(26,58,92,.18))}
-.no-webgl .hero__fallback,.reduced .hero__fallback{display:flex}
-.no-webgl #rch-logo-3d canvas,.reduced #rch-logo-3d canvas{display:none}
+/* Hero photo frame (portrait 3:4 — native ratio of the workspace-tour image) */
+.hero__visual{position:relative;margin:0}
+.hero__photo{position:relative;aspect-ratio:3/4;border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow-lg);background:var(--surface-2);isolation:isolate}
+.hero__photo img{width:100%;height:100%;object-fit:cover;display:block}
+.hero__photo::after{content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);border-radius:inherit}
+.hero__visual .halo{position:absolute;inset:-6% -8% auto -8%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 60% 40%,rgba(175,24,130,.16),transparent 62%);filter:blur(8px);z-index:-1}
 @media(max-width:768px){
   .hero__grid{grid-template-columns:1fr;text-align:center}
   .hero__sub{margin-inline:auto}
   .hero__cta,.hero__stats{justify-content:center}
-  .hero__visual{order:-1;max-width:420px;margin-inline:auto;width:100%}
+  .hero__visual{order:-1;max-width:340px;margin-inline:auto;width:100%}
   .eyebrow{justify-content:center}
 }
+
+/* Scroll-driven 3D plane frame (CSS-moved carriage; attitude done in-scene) */
+#rch-plane-flight{position:fixed;inset-block-start:0;inset-inline-start:0;z-index:60;pointer-events:none;
+  width:clamp(120px,14vw,190px);aspect-ratio:1;will-change:transform;
+  filter:drop-shadow(0 14px 22px rgba(10,13,18,.22))}
+#rch-plane-flight .pf__canvas{position:absolute;inset:0}
+#rch-plane-flight .pf__canvas canvas{display:block;width:100%!important;height:100%!important}
+#rch-plane-flight .pf__fallback{position:absolute;inset:0;margin:auto;width:60%;height:auto;display:none}
+.no-webgl #rch-plane-flight .pf__fallback{display:block}
+.no-webgl #rch-plane-flight .pf__canvas{display:none}
+@media(max-width:768px){ #rch-plane-flight{width:clamp(110px,26vw,150px)} }
+/* On phones the photo carries the hero; the fixed overlay plane is hidden to avoid clutter */
+@media(max-width:640px){ #rch-plane-flight{display:none} }
 
 /* ============ Reveal system (JS adds .rv, then .in) ============ */
 .rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
@@ -182,7 +228,7 @@ img{max-width:100%;display:block}
 
 /* ============ CEO quote ============ */
 .ceo{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,44px);align-items:center}
-.ceo__avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(150deg,var(--navy),var(--navy-900));
+.ceo__avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(150deg,var(--accent),var(--indigo));
   color:#fff;display:grid;place-items:center;font-size:1.5rem;font-weight:600;box-shadow:var(--shadow-md)}
 .ceo__q{font-size:clamp(1.3rem,2.6vw,2rem);font-weight:500;line-height:1.35;letter-spacing:-.02em;color:var(--navy)}
 .ceo__q .mk{color:var(--magenta)}
@@ -192,10 +238,10 @@ img{max-width:100%;display:block}
 
 /* ============ Mission / Vision ============ */
 .mv{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.mv__card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(28px,4vw,44px);
+.mv__card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(28px,4vw,44px);
   transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
 .mv__card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
-.mv__card--dark{background:var(--navy);color:#fff;border-color:transparent}
+.mv__card--dark{background:var(--indigo);color:#fff;border-color:transparent}
 .mv__k{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--magenta);font-weight:500}
 .mv__card h3{font-size:1.5rem;margin-block-start:14px}
 .mv__card p{margin-block-start:16px;font-size:1.1rem;line-height:1.5}
@@ -204,11 +250,11 @@ img{max-width:100%;display:block}
 
 /* ============ RAPID values ============ */
 .rapid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.rapid__card{background:#fff;border:1px solid var(--line);border-radius:var(--r-card);padding:26px 22px;
+.rapid__card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:26px 22px;
   transition:transform .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease)}
 .rapid__card:hover{transform:translateY(-6px);border-color:transparent;box-shadow:var(--shadow-md)}
 .rapid__l{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;font-weight:600;font-size:1.25rem;
-  background:rgba(214,40,107,.1);color:var(--magenta);margin-bottom:18px}
+  background:rgba(175,24,130,.1);color:var(--magenta);margin-bottom:18px}
 .rapid__card h4{font-size:1.05rem}
 .rapid__card p{margin-block-start:8px;font-size:.9rem;color:var(--muted);line-height:1.45}
 @media(max-width:1024px){.rapid{grid-template-columns:repeat(2,1fr)}}
@@ -216,13 +262,13 @@ img{max-width:100%;display:block}
 
 /* ============ Services ============ */
 .svc{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
-.svc__card{grid-column:span 2;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);
+.svc__card{grid-column:span 2;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
   padding:clamp(24px,3vw,32px);display:flex;flex-direction:column;
   transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
 .svc__card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
 .svc__card--wide{grid-column:span 3}
 .svc__ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:var(--magenta);
-  background:rgba(214,40,107,.09);margin-bottom:20px}
+  background:rgba(175,24,130,.09);margin-bottom:20px}
 .svc__ic svg{width:24px;height:24px}
 .svc__card h3{font-size:1.25rem}
 .svc__card>p{margin-block-start:12px;color:var(--muted);font-size:.95rem}
@@ -241,14 +287,14 @@ img{max-width:100%;display:block}
 
 /* ============ Company profile / Why RCH ============ */
 .why{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,64px);align-items:center}
-.why__panel{background:var(--navy);color:#fff;border-radius:var(--r-lg);padding:clamp(32px,4vw,52px);position:relative;overflow:hidden}
+.why__panel{background:var(--indigo);color:#fff;border-radius:var(--r-lg);padding:clamp(32px,4vw,52px);position:relative;overflow:hidden}
 .why__panel::after{content:"";position:absolute;inset-block-end:-40%;inset-inline-end:-20%;width:70%;aspect-ratio:1;
-  border-radius:50%;background:radial-gradient(circle,rgba(214,40,107,.35),transparent 60%)}
+  border-radius:50%;background:radial-gradient(circle,rgba(175,24,130,.35),transparent 60%)}
 .why__panel h2{font-size:clamp(1.7rem,3vw,2.4rem);position:relative}
 .why__panel p{margin-block-start:20px;color:#dfe7f0;font-size:1.05rem;position:relative}
 .why__facts{display:grid;gap:18px}
 .why__fact{display:flex;gap:16px;align-items:flex-start;padding:20px;border:1px solid var(--line);border-radius:var(--r-card);
-  background:#fff;transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
+  background:var(--card);transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
 .why__fact:hover{border-color:transparent;box-shadow:var(--shadow-sm)}
 .why__fact .n{font-size:1.5rem;font-weight:600;color:var(--magenta);line-height:1;min-width:56px}
 .why__fact h4{font-size:1rem}
@@ -257,7 +303,7 @@ img{max-width:100%;display:block}
 
 /* ============ Certificates ============ */
 .certs{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
-.cert{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:var(--r-card);
+.cert{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);
   padding:18px 24px;min-width:200px}
 .cert .badge{width:44px;height:44px;border-radius:10px;background:var(--gray-50);display:grid;place-items:center;color:var(--navy)}
 .cert h4{font-size:.95rem}
@@ -265,10 +311,10 @@ img{max-width:100%;display:block}
 
 /* ============ Case studies ============ */
 .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.case{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:#fff;
+.case{border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--card);
   transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
 .case:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
-.case__top{aspect-ratio:16/10;background:linear-gradient(135deg,var(--navy),var(--navy-900));position:relative;color:#fff;
+.case__top{aspect-ratio:16/10;background:linear-gradient(135deg,var(--indigo),var(--navy-900));position:relative;color:#fff;
   display:flex;align-items:flex-end;padding:20px}
 .case__top .tag{position:absolute;inset-block-start:16px;inset-inline-start:16px;font-size:.72rem;font-weight:500;
   background:rgba(255,255,255,.14);backdrop-filter:blur(6px);padding:5px 11px;border-radius:999px;letter-spacing:.04em}
@@ -292,13 +338,13 @@ img{max-width:100%;display:block}
 
 /* ============ Blog ============ */
 .blog{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.post{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
+.post{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;
   transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
 .post:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
 .post__img{aspect-ratio:16/9;background:var(--gray-50);position:relative;overflow:hidden}
 .post__img::after{content:"";position:absolute;inset:0;background:
-  radial-gradient(circle at 30% 30%,rgba(214,40,107,.14),transparent 55%),
-  radial-gradient(circle at 75% 70%,rgba(26,58,92,.14),transparent 55%)}
+  radial-gradient(circle at 30% 30%,rgba(175,24,130,.14),transparent 55%),
+  radial-gradient(circle at 75% 70%,rgba(10,13,18,.14),transparent 55%)}
 .post__body{padding:24px}
 .post__meta{font-size:.78rem;color:var(--magenta);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
 .post__body h4{font-size:1.1rem;margin-block-start:12px;line-height:1.3}
@@ -306,7 +352,7 @@ img{max-width:100%;display:block}
 @media(max-width:900px){.blog{grid-template-columns:1fr}}
 
 /* ============ Footer ============ */
-.footer{background:var(--navy);color:#fff;padding-block:clamp(56px,7vw,84px) 32px}
+.footer{background:var(--black);color:#fff;padding-block:clamp(56px,7vw,84px) 32px}
 .footer__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
 .footer .brand{color:#fff}
 .footer .brand .mark{color:var(--magenta)}
@@ -348,18 +394,19 @@ body{background:
   radial-gradient(120% 80% at 50% -10%, #fbfcfe 0%, var(--white) 46%) no-repeat,
   var(--white);}
 
-/* Cards: subtle top-lit gradient surface + resting elevation + crisper hover */
+/* Cards: subtle top-lit gradient surface + resting elevation + crisper hover.
+   Uses --card-grad so cards read correctly on both white and near-black sections. */
 .mv__card,.rapid__card,.svc__card,.case,.post,.cert,.why__fact{
-  background-image:linear-gradient(180deg,#ffffff 0%,#fcfcfe 100%);
+  background-image:var(--card-grad);
   box-shadow:var(--shadow-xs);
   transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease);
 }
 .mv__card:hover,.svc__card:hover,.case:hover,.post:hover{box-shadow:var(--shadow-lg)}
 .rapid__card:hover{box-shadow:var(--shadow-md)}
 
-/* Dark surfaces get a soft top sheen + depth instead of pure flat navy */
+/* Accent/indigo panels get a soft top sheen + depth */
 .mv__card--dark,.why__panel,.case__top,.ceo__avatar{
-  background-image:linear-gradient(160deg,#21486f 0%,var(--navy) 42%,var(--navy-900) 100%);
+  background-image:linear-gradient(160deg,#31489a 0%,var(--indigo) 46%,var(--indigo-700) 100%);
   position:relative;isolation:isolate;
 }
 .mv__card--dark::before,.why__panel::before{
@@ -370,26 +417,26 @@ body{background:
 
 /* Primary CTA: gentle vertical sheen + resting magenta-tinted shadow */
 .btn--primary{
-  background-image:linear-gradient(180deg,#e0417d 0%,var(--magenta) 55%,#c9245f 100%);
-  box-shadow:0 1px 2px rgba(168,30,84,.30),0 8px 18px rgba(214,40,107,.22);
+  background-image:linear-gradient(180deg,#c72e9c 0%,var(--accent) 55%,#8f1468 100%);
+  box-shadow:0 1px 2px rgba(143,20,104,.30),0 8px 18px rgba(175,24,130,.22);
 }
-.btn--primary:hover{box-shadow:0 2px 4px rgba(168,30,84,.34),0 14px 30px rgba(214,40,107,.30)}
-.btn--ghost{background-image:linear-gradient(180deg,#fff,#fbfbfd);box-shadow:var(--shadow-xs)}
+.btn--primary:hover{box-shadow:0 2px 4px rgba(143,20,104,.34),0 14px 30px rgba(175,24,130,.30)}
+.btn--ghost{background-image:var(--card-grad);box-shadow:var(--shadow-xs)}
 
 /* Nav: a touch more presence when scrolled */
-.nav.is-scrolled{background:rgba(255,255,255,.82);box-shadow:0 1px 0 rgba(26,58,92,.04),0 8px 24px rgba(26,58,92,.06)}
+.nav.is-scrolled{background:rgba(255,255,255,.82);box-shadow:0 1px 0 rgba(10,13,18,.04),0 8px 24px rgba(10,13,18,.06)}
 
 /* Service & value icons: soft dimensional chip */
 .svc__ic,.rapid__l{
-  background-image:linear-gradient(160deg,rgba(214,40,107,.16),rgba(214,40,107,.06));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 10px rgba(214,40,107,.10);
+  background-image:linear-gradient(160deg,rgba(175,24,130,.16),rgba(175,24,130,.06));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 10px rgba(175,24,130,.10);
 }
 
 /* Case & blog media: richer, more photographic placeholder surfaces */
 .case__top{background-image:
-  radial-gradient(120% 100% at 100% 0%, rgba(214,40,107,.30), transparent 55%),
-  linear-gradient(160deg,#21486f,var(--navy-900));}
-.post__img{background-image:linear-gradient(180deg,#eef1f6,#e7ebf2)}
+  radial-gradient(120% 100% at 100% 0%, rgba(175,24,130,.32), transparent 55%),
+  linear-gradient(160deg,var(--indigo),var(--navy-900));}
+.post__img{background:var(--surface-2)}
 .post__img::after{opacity:.9}
 
 /* Stat numbers: hairline weight lift for hierarchy */
@@ -402,11 +449,11 @@ body{background:
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .rv{opacity:1;transform:none}
-  #rch-progress .plane__craft{transform:none!important}
+  #rch-plane-flight{transform:none!important}
 }
 .reduced .marquee__row{animation:none}
 .reduced .rv{opacity:1;transform:none;transition:none}
-.reduced #rch-progress .plane__craft{transform:none!important}
+.reduced #rch-plane-flight{transform:none!important}
 </style>
 </head>
 <body>
@@ -426,10 +473,15 @@ body{background:
   </symbol>
 </svg>
 
-<!-- Scroll progress + flying paper plane -->
-<div id="rch-progress" aria-hidden="true">
-  <div class="track"></div>
-  <div class="plane"><span class="plane__craft"><svg class="plane__svg"><use href="#rch-plane"/></svg></span></div>
+<!-- Scroll progress (neutral thin bar) -->
+<div id="rch-progress" aria-hidden="true"><div class="track"></div></div>
+
+<!-- ============ Scroll-driven 3D paper plane (was the hero logo; now flies down the page).
+     The frame is translated along the viewport by JS (CSS-moved frame); banking/pitch are
+     real 3D rotation in-scene. Static image fallback for no-WebGL / reduced-motion. -->
+<div id="rch-plane-flight" aria-hidden="true">
+  <div class="pf__canvas"></div>
+  <img class="pf__fallback" src="assets/rch-logo-fallback.png" alt="" width="120" height="95">
 </div>
 
 <!-- ============ NAV ============ -->
@@ -440,17 +492,28 @@ body{background:
       RCH<span class="brand__suffix"> Qatar</span>
     </a>
     <nav class="nav__links" aria-label="Primary">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#why">Why RCH</a>
-      <a href="#cases">Case studies</a>
-      <a href="#blog">Insights</a>
+      <a href="#about" data-i18n="about">About</a>
+      <a href="#services" data-i18n="services">Services</a>
+      <a href="#why" data-i18n="why">Why RCH</a>
+      <a href="#cases" data-i18n="cases">Case studies</a>
+      <a href="#blog" data-i18n="insights">Insights</a>
     </nav>
     <div class="nav__side">
-      <div class="lang" role="group" aria-label="Language">
-        <button aria-pressed="true" data-lang="en">EN</button>
-        <button aria-pressed="false" data-lang="ar">AR</button>
-        <button aria-pressed="false" data-lang="ru">RU</button>
+      <!-- 5-language switcher. Mechanic only (dir/lang/fonts + example labels);
+           real translations to be provided (or handled by Polylang in production). -->
+      <div class="lang" aria-expanded="false">
+        <button class="lang__btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language">
+          <svg class="globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>
+          <span class="lang__cur">EN</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <ul class="lang__menu" id="langMenu" role="listbox" aria-label="Language" tabindex="-1">
+          <li role="option" data-lang="en" data-dir="ltr" data-code="EN" aria-selected="true">English <span class="tag">EN</span></li>
+          <li role="option" data-lang="ar" data-dir="rtl" data-code="AR">العربية <span class="tag">AR</span></li>
+          <li role="option" data-lang="ru" data-dir="ltr" data-code="RU">Русский <span class="tag">RU</span></li>
+          <li role="option" data-lang="fr" data-dir="ltr" data-code="FR">Français <span class="tag">FR</span></li>
+          <li role="option" data-lang="zh" data-dir="ltr" data-code="中文">中文 <span class="tag">ZH</span></li>
+        </ul>
       </div>
       <a class="btn btn--primary" href="#contact">Get started
         <svg class="pplane" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
@@ -490,16 +553,18 @@ body{background:
         </div>
       </div>
     </div>
-    <div class="hero__visual rv rv-d2">
+    <figure class="hero__visual rv rv-d2">
       <div class="halo" aria-hidden="true"></div>
-      <div id="rch-logo-3d" role="img" aria-label="RCH paper-plane logo in 3D"></div>
-      <div class="hero__fallback"><img src="assets/rch-logo-fallback.png" alt="RCH logo" width="260" height="205"></div>
-    </div>
+      <div class="hero__photo">
+        <img src="assets/book-your-workspace-tour.jpg" alt="Book your workspace tour with RCH Qatar"
+             width="1152" height="1600" loading="eager" decoding="async">
+      </div>
+    </figure>
   </div>
 </section>
 
 <!-- ============ CEO QUOTE ============ -->
-<section class="section section--subtle" aria-label="Leadership">
+<section class="section section--dark" aria-label="Leadership">
   <div class="wrap ceo">
     <div class="ceo__avatar rv" aria-hidden="true">TM</div>
     <div>
@@ -533,7 +598,7 @@ body{background:
 </section>
 
 <!-- ============ RAPID VALUES ============ -->
-<section class="section section--subtle" aria-label="Core values">
+<section class="section section--dark" aria-label="Core values">
   <div class="wrap">
     <div class="shead shead--center">
       <span class="eyebrow rv">Our core values</span>
@@ -606,7 +671,7 @@ body{background:
 </section>
 
 <!-- ============ WHY RCH / COMPANY PROFILE ============ -->
-<section class="section section--subtle" id="why" aria-label="Why RCH">
+<section class="section section--dark" id="why" aria-label="Why RCH">
   <div class="wrap why">
     <div class="why__panel rv">
       <h2>Your strategic partner in business success</h2>
@@ -636,7 +701,7 @@ body{background:
 </section>
 
 <!-- ============ CASE STUDIES ============ -->
-<section class="section section--subtle" id="cases" aria-label="Case studies">
+<section class="section section--dark" id="cases" aria-label="Case studies">
   <div class="wrap">
     <div class="shead">
       <span class="eyebrow rv">Case studies</span>
@@ -682,7 +747,7 @@ body{background:
 </section>
 
 <!-- ============ BLOG ============ -->
-<section class="section section--subtle" id="blog" aria-label="Insights">
+<section class="section section--dark" id="blog" aria-label="Insights">
   <div class="wrap">
     <div class="shead">
       <span class="eyebrow rv">Insights</span>
@@ -745,69 +810,18 @@ body{background:
   var onScroll = function(){ nav.classList.toggle("is-scrolled", window.scrollY > 8); };
   onScroll(); window.addEventListener("scroll", onScroll, {passive:true});
 
-  // Scroll progress + flying paper plane.
-  // progress() keeps its original job (track fill + horizontal carriage position).
-  // A separate rAF "flight" loop layers the attitude: banking with scroll velocity,
-  // pitch, a speed-scaled flutter, and a settle-to-rest when the scroll stops.
+  // Scroll progress — neutral thin bar only. The plane no longer lives here;
+  // it is the scroll-driven 3D craft handled in the Three.js block below.
   var track = document.querySelector("#rch-progress .track");
-  var plane = document.querySelector("#rch-progress .plane");
-  var craft = document.querySelector("#rch-progress .plane__craft");
-  var pTarget = 0;
-
   function progress(){
     var h = document.documentElement;
     var max = h.scrollHeight - h.clientHeight;
     var p = max > 0 ? h.scrollTop / max : 0;
-    pTarget = p;
     track.style.transform = "scaleX(" + p + ")";
-    plane.style.insetInlineStart = (p*100) + "%";
-    startFlight();
   }
-
-  // --- flight attitude loop (skipped entirely under reduced motion) ---
-  var flying=false, rafF=null, lastT=0, lastP=0, vel=0, bank=0, pitch=0, phase=0, idleT=0;
-  function isReduced(){ return reduce || document.body.classList.contains("reduced"); }
-  function flight(now){
-    if(!craft || isReduced()){ if(craft) craft.style.transform="translateY(0)"; flying=false; rafF=null; return; }
-    var dt = Math.min((now-lastT)/1000, 0.05) || 0.016; lastT = now;
-    var dp = pTarget - lastP; lastP = pTarget;
-    var instVel = dp / dt;                       // progress units per second (signed)
-    vel += (instVel - vel) * 0.2;                // smooth
-    var speed = Math.abs(vel);
-    var rtl = document.documentElement.dir === "rtl";
-    var dir = rtl ? -1 : 1;                       // mirror banking when the craft is flipped
-
-    var bankTarget  = Math.max(-22, Math.min(22, vel * 900));   // lean into the direction
-    var pitchTarget = Math.max(-14, Math.min(14, -vel * 620));  // nose down descending, up ascending
-    bank  += (bankTarget  - bank)  * 0.12;
-    pitch += (pitchTarget - pitch) * 0.10;
-
-    var amp = Math.min(speed * 130, 1);          // flutter grows with speed, 0 at rest
-    phase += dt * (7 + speed * 110);
-    var bob = Math.sin(phase) * (0.4 + amp * 2.4);
-    var flr = Math.sin(phase * 1.3) * amp * 3;   // flutter roll
-
-    craft.style.transform =
-      "perspective(240px) rotateX(" + pitch + "deg) rotateZ(" + ((bank + flr) * dir) + "deg) translateY(" + bob + "px)";
-
-    // settle to rest, then stop the loop until the next scroll
-    if(speed < 0.0005 && Math.abs(bank) < 0.25 && Math.abs(pitch) < 0.25){
-      idleT += dt;
-      if(idleT > 0.55){ craft.style.transform = "translateY(0)"; flying=false; rafF=null; return; }
-    } else { idleT = 0; }
-    rafF = requestAnimationFrame(flight);
-  }
-  function startFlight(){
-    if(flying || isReduced() || !craft) return;
-    flying = true; lastT = performance.now(); lastP = pTarget; idleT = 0;
-    rafF = requestAnimationFrame(flight);
-  }
-
-  progress(); window.addEventListener("scroll", progress, {passive:true});
+  progress();
+  window.addEventListener("scroll", progress, {passive:true});
   window.addEventListener("resize", progress);
-  document.addEventListener("visibilitychange", function(){
-    if(document.hidden && rafF){ cancelAnimationFrame(rafF); flying=false; rafF=null; }
-  });
 
   // Reveal on scroll — JS adds .in, never touches source HTML structure
   var revealEls = [].slice.call(document.querySelectorAll(".rv"));
@@ -845,16 +859,69 @@ body{background:
     counters.forEach(function(el){ cio.observe(el); });
   }
 
-  // Language pills (demo: EN/AR flips direction to test RTL)
-  var langBtns = [].slice.call(document.querySelectorAll(".lang [data-lang]"));
+  // ===== Language switcher (mechanic only) =====
+  // Handles dir (RTL for Arabic), lang attribute, CJK/Arabic font loading, and
+  // EXAMPLE nav labels per language. Real content translation is out of scope for
+  // this mock (to be provided, or handled by Polylang in production).
+  var langWrap = document.querySelector(".lang");
+  var langBtn  = document.getElementById("langBtn");
+  var langMenu = document.getElementById("langMenu");
+  var langCur  = langWrap ? langWrap.querySelector(".lang__cur") : null;
+  var options  = langMenu ? [].slice.call(langMenu.querySelectorAll("li")) : [];
+  var RTL_LANGS = {ar:1};
+  // Example labels only — NOT a translation deliverable.
+  var LABELS = {
+    en:{about:"About",services:"Services",why:"Why RCH",cases:"Case studies",insights:"Insights",cta:"Get started"},
+    ar:{about:"نبذة",services:"الخدمات",why:"لماذا RCH",cases:"دراسات الحالة",insights:"رؤى",cta:"ابدأ الآن"},
+    ru:{about:"О нас",services:"Услуги",why:"Почему RCH",cases:"Кейсы",insights:"Аналитика",cta:"Начать"},
+    fr:{about:"À propos",services:"Services",why:"Pourquoi RCH",cases:"Études de cas",insights:"Analyses",cta:"Commencer"},
+    zh:{about:"关于",services:"服务",why:"为什么选择 RCH",cases:"案例研究",insights:"洞察",cta:"开始"}
+  };
+  var scLoaded = false;
+  function loadCJK(){
+    if(scLoaded) return; scLoaded = true;
+    var l=document.createElement("link"); l.rel="stylesheet";
+    l.href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap";
+    document.head.appendChild(l);
+  }
+  function openMenu(o){
+    if(!langWrap) return;
+    langWrap.setAttribute("aria-expanded", o ? "true":"false");
+    langBtn.setAttribute("aria-expanded", o ? "true":"false");
+    if(o) loadCJK();
+  }
   function setLang(code){
-    langBtns.forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-lang")===code ? "true":"false"); });
-    var rtl = code === "ar";
+    var rtl = !!RTL_LANGS[code];
     document.documentElement.dir = rtl ? "rtl" : "ltr";
     document.documentElement.lang = code;
-    progress();
+    if(code==="zh") loadCJK();
+    // reflect selection
+    options.forEach(function(li){
+      var on = li.getAttribute("data-lang")===code;
+      li.setAttribute("aria-selected", on ? "true":"false");
+      if(on && langCur) langCur.textContent = li.getAttribute("data-code");
+    });
+    // example labels (nav links + CTA)
+    var dict = LABELS[code] || LABELS.en;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var k = el.getAttribute("data-i18n"); if(dict[k]) el.textContent = dict[k];
+    });
+    var cta = document.querySelector('.nav__side .btn--primary');
+    if(cta){ var ico = cta.querySelector('svg'); cta.childNodes[0].nodeValue = dict.cta + " "; if(ico) cta.appendChild(ico); }
+    // keep the demo RTL chip in sync
+    var rtlChip = document.getElementById("ctl-rtl"); if(rtlChip) rtlChip.classList.toggle("on", rtl);
   }
-  langBtns.forEach(function(b){ b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); }); });
+  if(langBtn){
+    langBtn.addEventListener("click", function(e){
+      e.stopPropagation();
+      openMenu(langWrap.getAttribute("aria-expanded")!=="true");
+    });
+    options.forEach(function(li){
+      li.addEventListener("click", function(){ setLang(li.getAttribute("data-lang")); openMenu(false); });
+    });
+    document.addEventListener("click", function(){ openMenu(false); });
+    document.addEventListener("keydown", function(e){ if(e.key==="Escape") openMenu(false); });
+  }
 
   // Demo controls
   document.getElementById("ctl-rtl").addEventListener("click", function(){
@@ -872,13 +939,14 @@ body{background:
 })();
 </script>
 
-<!-- ============ Three.js 3D logo (production: rch-logo-3d.js) ============ -->
+<!-- ============ Three.js scroll-driven 3D paper plane (production: rch-logo-3d.js) ============ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
 (function(){
   "use strict";
-  var mount = document.getElementById("rch-logo-3d");
+  var frame = document.getElementById("rch-plane-flight");
+  var mount = frame ? frame.querySelector(".pf__canvas") : null;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // WebGL support test
@@ -887,10 +955,27 @@ body{background:
       return !!(window.WebGLRenderingContext && (c.getContext("webgl")||c.getContext("experimental-webgl"))); }
     catch(e){ return false; }
   }
-  if(!mount || typeof THREE === "undefined" || !webglOK() || reduce){
-    document.body.classList.add(reduce ? "reduced" : "no-webgl");
-    return; // fallback image shows via CSS
+  // No WebGL / no Three.js → static fallback image (positioned by CSS place below).
+  if(!frame || !mount || typeof THREE === "undefined" || !webglOK()){
+    document.body.classList.add("no-webgl");
+    placeStatic();
+    return;
   }
+  // Under reduced-motion we still show the plane, but STATIC (one frame, no scroll drive).
+  var reduceMode = reduce || document.body.classList.contains("reduced");
+
+  // Position the fixed flight frame along a "flight lane" for a given scroll progress p.
+  function placeFrame(p, driftPhase){
+    if(!frame) return;
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var fw = frame.offsetWidth, fh = frame.offsetHeight;
+    var laneX = vw < 768 ? 0.76 : 0.90;              // right gutter lane (fraction of viewport)
+    var drift = Math.sin((driftPhase||0)) * (vw < 768 ? 8 : 14);
+    var x = laneX * vw - fw/2 + drift;
+    var y = (0.20 + p * 0.60) * vh - fh/2;           // starts below the nav, descends as you scroll
+    frame.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)";
+  }
+  function placeStatic(){ placeFrame(0.12, 0); }
 
   // GLB source: relative asset by default; a self-contained build sets window.__RCH_GLB__ to a data URI.
   var GLB_SRC = window.__RCH_GLB__ || "assets/rch-logo.glb";
@@ -905,15 +990,17 @@ body{background:
   if(renderer.outputEncoding !== undefined){ renderer.outputEncoding = THREE.sRGBEncoding; }
   mount.appendChild(renderer.domElement);
 
-  // Lighting: key + fill (navy-tinted) + ambient + rim
-  scene.add(new THREE.AmbientLight(0xffffff, 0.65));
+  // Lighting: key + fill (indigo-tinted) + ambient + accent rim (Saudi palette)
+  scene.add(new THREE.AmbientLight(0xffffff, 0.68));
   var key = new THREE.DirectionalLight(0xffffff, 1.35); key.position.set(2.5, 3, 3); scene.add(key);
-  var fill = new THREE.DirectionalLight(0x1A3A5C, 0.9); fill.position.set(-3, -1, 1.5); scene.add(fill);
-  var rim = new THREE.DirectionalLight(0xD6286B, 0.55); rim.position.set(-1.5, 2, -3); scene.add(rim);
+  var fill = new THREE.DirectionalLight(0x293d81, 0.9); fill.position.set(-3, -1, 1.5); scene.add(fill);
+  var rim = new THREE.DirectionalLight(0xAF1882, 0.6); rim.position.set(-1.5, 2, -3); scene.add(rim);
 
+  // Base heading so the plane reads as flying forward/down along the lane.
+  var BASE_RX = -0.32, BASE_RY = -0.6, BASE_RZ = 0.14;
   var pivot = new THREE.Group(); scene.add(pivot);
-  var model = null, running = false, visible = true, rafId = null;
-  var targetRX = 0.16, targetRY = -0.42, mouseRX = 0, mouseRY = 0;
+  pivot.rotation.set(BASE_RX, BASE_RY, BASE_RZ);
+  var model = null, running = false, rafId = null;
 
   var loader = new THREE.GLTFLoader();
   loader.load(GLB_SRC, function(gltf){
@@ -927,50 +1014,70 @@ body{background:
         m.needsUpdate = true;
       }
     });
-    // Center + normalise scale to fit the frame
     var box = new THREE.Box3().setFromObject(model);
     var size = box.getSize(new THREE.Vector3());
     var center = box.getCenter(new THREE.Vector3());
     model.position.sub(center);
     var maxDim = Math.max(size.x, size.y, size.z) || 1;
-    var s = 2.6 / maxDim;
-    model.scale.setScalar(s);
+    model.scale.setScalar(2.7 / maxDim);
     pivot.add(model);
-    pivot.rotation.set(targetRX, targetRY, 0);
-    start();
+    resize();
+    if(reduceMode){ placeStatic(); renderer.render(scene, camera); }  // one static frame, no motion
+    else { onScroll(); start(); }
   }, undefined, function(err){
-    console.warn("RCH 3D: model failed to load, showing fallback.", err);
-    document.body.classList.add("no-webgl");
-    cleanup();
+    console.warn("RCH plane: model failed to load, showing fallback.", err);
+    document.body.classList.add("no-webgl"); placeStatic(); cleanup();
   });
 
-  // Pointer parallax
-  mount.addEventListener("pointermove", function(e){
-    var r = mount.getBoundingClientRect();
-    var nx = (e.clientX - r.left)/r.width - 0.5;
-    var ny = (e.clientY - r.top)/r.height - 0.5;
-    mouseRY = nx * 0.5;  // ~±0.5 rad max blended
-    mouseRX = ny * 0.28;
-  });
-  mount.addEventListener("pointerleave", function(){ mouseRY = 0; mouseRX = 0; });
+  // ---- Scroll-driven flight state ----
+  var pTarget = 0, driftPhase = 0, vel = 0, lastP = 0;
+  var bank = 0, pitch = 0, phase = 0, idleT = 0, lastT = 0;
+  function scrollP(){
+    var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+    return max > 0 ? h.scrollTop / max : 0;
+  }
+  function isRed(){ return reduceMode || document.body.classList.contains("reduced"); }
+  function onScroll(){ pTarget = scrollP(); if(!isRed()) start(); }
 
   var clock = new THREE.Clock();
-  function render(){
-    if(!running){ return; }
+  function render(now){
+    if(!running) return;
     rafId = requestAnimationFrame(render);
-    if(!visible) return;
-    var dt = clock.getDelta();
-    targetRY += dt * 0.28; // gentle autoplay spin
-    if(pivot){
-      // ease toward autoplay + parallax
-      var wantX = 0.16 + mouseRX;
-      var wantY = targetRY + mouseRY;
-      pivot.rotation.x += (wantX - pivot.rotation.x) * 0.06;
-      pivot.rotation.y += (wantY - pivot.rotation.y) * 0.06;
-    }
+    var dt = Math.min(clock.getDelta(), 0.05);
+
+    // velocity of scroll progress
+    var dp = pTarget - lastP; lastP = pTarget;
+    var instVel = dt > 0 ? dp / dt : 0;
+    vel += (instVel - vel) * 0.2;
+    var speed = Math.abs(vel);
+    var rtl = document.documentElement.dir === "rtl";
+    var dir = rtl ? -1 : 1;
+
+    // move the frame down its lane; gentle organic drift + flutter grows with speed
+    driftPhase += dt * (0.6 + speed * 8);
+    placeFrame(pTarget, driftPhase);
+
+    // banking / pitch from velocity, micro-oscillation, settle at rest
+    var bankT  = Math.max(-0.5, Math.min(0.5, vel * 22)) * dir;
+    var pitchT = Math.max(-0.35, Math.min(0.35, -vel * 16));
+    bank  += (bankT  - bank ) * 0.10;
+    pitch += (pitchT - pitch) * 0.09;
+    var amp = Math.min(speed * 90, 1);
+    phase += dt * (2 + speed * 60);
+    var bob = Math.sin(phase) * 0.05 * (0.4 + amp);
+
+    pivot.rotation.z = BASE_RZ + bank + Math.sin(phase*1.3) * amp * 0.06;
+    pivot.rotation.x = BASE_RX + pitch + bob;
+    pivot.rotation.y = BASE_RY;
+
     renderer.render(scene, camera);
+
+    // idle-pause: once settled and no scrolling, stop the loop until next scroll
+    if(speed < 0.0004 && Math.abs(bank) < 0.01 && Math.abs(pitch) < 0.01){
+      idleT += dt; if(idleT > 0.8){ stop(); }
+    } else idleT = 0;
   }
-  function start(){ if(running) return; running = true; clock.getDelta(); render(); }
+  function start(){ if(running || isRed()) return; running = true; clock.getDelta(); lastP = pTarget; rafId = requestAnimationFrame(render); }
   function stop(){ running = false; if(rafId) cancelAnimationFrame(rafId); rafId = null; }
 
   function resize(){
@@ -978,19 +1085,12 @@ body{background:
     if(!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w/h; camera.updateProjectionMatrix();
+    if(reduceMode){ placeStatic(); if(model) renderer.render(scene, camera); }
+    else placeFrame(pTarget, driftPhase);
   }
-  resize();
+  window.addEventListener("scroll", onScroll, {passive:true});
   window.addEventListener("resize", resize);
-
-  // Pause render when hero out of viewport
-  if("IntersectionObserver" in window){
-    new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ visible = e.isIntersecting; if(visible && !running) start(); });
-    }, {threshold:0.01}).observe(mount);
-  }
-  document.addEventListener("visibilitychange", function(){
-    if(document.hidden) stop(); else start();
-  });
+  document.addEventListener("visibilitychange", function(){ if(document.hidden) stop(); else if(!isRed()) start(); });
 
   function cleanup(){
     stop();
