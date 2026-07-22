@@ -6,3 +6,12 @@ reference/
 Thumbs.db
 *.log
 node_modules/
+
+# Generated self-contained preview (13MB) and test artifacts
+rch-qatar-demo-standalone.html
+scratchpad-*.png
+scratchpad-*.js
+sec-*.png
+rtl-hero.png
+mobile-hero.png
+package-lock.json
