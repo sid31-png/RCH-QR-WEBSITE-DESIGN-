@@ -64,8 +64,8 @@
   --plane-accent2:#2FB6D6;
   /* Type & rhythm */
   --font:"Inter","Cairo","Noto Sans Arabic","Noto Sans SC",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
-  --maxw:1360px;                 /* widened from 1200 to better fill large screens */
-  --gutter:clamp(20px,4.5vw,56px);
+  --maxw:1560px;                 /* widened (1200 -> 1360 -> 1560) to fill large screens */
+  --gutter:clamp(20px,4vw,64px);
   --section-y:clamp(64px,9vw,128px);
   --ease:cubic-bezier(.22,.61,.36,1);
 }
@@ -136,15 +136,17 @@ img{max-width:100%;display:block}
   backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
   border-bottom:1px solid transparent;transition:border-color .3s var(--ease),background .3s var(--ease)}
 .nav.is-scrolled{border-color:var(--line)}
-.nav__inner{display:flex;align-items:center;gap:24px;height:64px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em;font-size:1.15rem;color:var(--navy)}
-.brand .mark{width:28px;height:28px;flex:none;filter:drop-shadow(0 2px 3px rgba(26,58,92,.20));
+.nav__inner{display:flex;align-items:center;gap:24px;height:72px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:-.02em;font-size:1.4rem;color:var(--navy)}
+.brand .mark{width:42px;height:42px;flex:none;filter:drop-shadow(0 2px 3px rgba(26,58,92,.20));
   transition:transform .45s var(--ease)}
+.footer .brand{font-size:1.5rem}
+.footer .brand .mark{width:46px;height:46px}
 .brand:hover .mark{transform:translate(2px,-2px) rotate(-6deg)}
 [dir="rtl"] .brand .mark{transform:scaleX(-1)}
 [dir="rtl"] .brand:hover .mark{transform:scaleX(-1) translate(2px,-2px) rotate(6deg)}
 .brand__suffix{color:var(--muted);font-weight:500}
-.footer .brand .mark{filter:drop-shadow(0 2px 4px rgba(0,0,0,.30))}
+.footer .brand .mark{filter:drop-shadow(0 2px 5px rgba(6,18,33,.45))}
 .nav__links{display:flex;gap:6px;margin-inline-start:auto}
 .nav__links a{font-size:.9rem;font-weight:500;color:var(--navy);padding:8px 12px;border-radius:8px;transition:color .2s,background .2s}
 .nav__links a:hover{color:var(--magenta);background:var(--gray-50)}
@@ -205,16 +207,15 @@ img{max-width:100%;display:block}
   .eyebrow{justify-content:center}
 }
 
-/* Cursor 3D plane — a fixed frame that follows the pointer (attitude done in-scene).
-   Hidden by default; JS reveals it (adds body.rch-cursor) only on fine-pointer +
-   WebGL + no reduced-motion. z-index above everything so it reads as the cursor. */
+/* Paper-plane cursor (the RCH logo's plane, SVG). Fixed frame follows the mouse;
+   .pf__craft banks with movement. Hidden by default; JS reveals it (body.rch-cursor)
+   only on a fine pointer + motion allowed. z-index above everything = it is the cursor. */
 #rch-plane-flight{position:fixed;inset-block-start:0;inset-inline-start:0;z-index:9999;pointer-events:none;
-  width:clamp(84px,8vw,120px);aspect-ratio:1;will-change:transform;display:none;
-  filter:drop-shadow(0 10px 16px rgba(26,58,92,.28))}
+  width:52px;height:52px;will-change:transform;display:none}
 body.rch-cursor #rch-plane-flight{display:block}
-#rch-plane-flight .pf__canvas{position:absolute;inset:0}
-#rch-plane-flight .pf__canvas canvas{display:block;width:100%!important;height:100%!important}
-#rch-plane-flight .pf__fallback{display:none}
+#rch-plane-flight .pf__craft{display:block;width:100%;height:100%;transform-origin:50% 50%;will-change:transform;
+  filter:drop-shadow(0 6px 7px rgba(26,58,92,.30)) drop-shadow(0 2px 2px rgba(168,30,84,.30))}
+#rch-plane-flight .pf__svg{display:block;width:100%;height:100%}
 /* Hide the system cursor while the plane cursor is active, but keep a usable
    cursor on anything interactive so links/buttons/fields stay clear. */
 body.rch-cursor{cursor:none}
@@ -500,12 +501,11 @@ body{background:
 <!-- Scroll progress (neutral thin bar) -->
 <div id="rch-progress" aria-hidden="true"><div class="track"></div></div>
 
-<!-- ============ 3D paper-plane cursor. The Three.js canvas lives in this fixed frame,
-     which JS moves to follow the mouse (banking/pitch in-scene). Shown only on a real
-     mouse + WebGL + motion allowed; otherwise hidden and the system cursor stays. -->
+<!-- ============ Paper-plane cursor = the RCH logo's plane (SVG). A fixed frame follows
+     the mouse; the inner craft banks with movement. Shown only on a real mouse + motion
+     allowed; touch / reduced-motion -> hidden, system cursor stays. -->
 <div id="rch-plane-flight" aria-hidden="true">
-  <div class="pf__canvas"></div>
-  <img class="pf__fallback" src="assets/rch-logo-fallback.png" alt="" width="120" height="95">
+  <span class="pf__craft"><svg class="pf__svg" viewBox="0 0 24 24"><use href="#rch-plane"/></svg></span>
 </div>
 
 <!-- ============ NAV ============ -->
@@ -1194,161 +1194,66 @@ body{background:
 })();
 </script>
 
-<!-- ============ Three.js 3D paper-plane cursor (production: rch-logo-3d.js) ============ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<!-- ============ Paper-plane cursor (RCH logo plane, SVG — no 3D dependency) ============ -->
 <script>
 (function(){
   "use strict";
   var frame = document.getElementById("rch-plane-flight");
-  var mount = frame ? frame.querySelector(".pf__canvas") : null;
+  var craft = frame ? frame.querySelector(".pf__craft") : null;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
 
-  function webglOK(){
-    try{ var c=document.createElement("canvas");
-      return !!(window.WebGLRenderingContext && (c.getContext("webgl")||c.getContext("experimental-webgl"))); }
-    catch(e){ return false; }
-  }
-  // The plane becomes the cursor ONLY on a real mouse + WebGL + motion allowed.
-  // Touch / no-WebGL / reduced-motion -> no plane, the system cursor stays (the frame
-  // is display:none until body.rch-cursor is added, and we never add it here).
-  if(!frame || !mount || typeof THREE === "undefined" || !webglOK() || !finePointer || reduce
-     || document.body.classList.contains("reduced")){
-    return;
-  }
+  // Cursor plane ONLY on a real mouse + motion allowed. Touch / reduced-motion ->
+  // no plane, the system cursor stays (frame is display:none until body.rch-cursor).
+  if(!frame || !craft || !finePointer || reduce || document.body.classList.contains("reduced")) return;
 
-  // GLB source: relative asset by default; a self-contained build sets window.__RCH_GLB__ to a data URI.
-  var GLB_SRC = window.__RCH_GLB__ || "assets/rch-logo.glb";
-
-  var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-  camera.position.set(0, 0.15, 4.4);
-
-  var renderer = new THREE.WebGLRenderer({antialias:true, alpha:true, powerPreference:"high-performance"});
-  renderer.setClearColor(0x000000, 0);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // cap dpr
-  if(renderer.outputEncoding !== undefined){ renderer.outputEncoding = THREE.sRGBEncoding; }
-  mount.appendChild(renderer.domElement);
-
-  // Lighting: key + navy fill + ambient + magenta rim (RCH palette)
-  scene.add(new THREE.AmbientLight(0xffffff, 0.70));
-  var key = new THREE.DirectionalLight(0xffffff, 1.35); key.position.set(2.5, 3, 3); scene.add(key);
-  var fill = new THREE.DirectionalLight(0x1A3A5C, 0.9); fill.position.set(-3, -1, 1.5); scene.add(fill);
-  var rim = new THREE.DirectionalLight(0xD6286B, 0.6); rim.position.set(-1.5, 2, -3); scene.add(rim);
-
-  var BASE_RX = -0.22, BASE_RY = -0.5, BASE_RZ = 0.08;
-  var pivot = new THREE.Group(); scene.add(pivot);
-  pivot.rotation.set(BASE_RX, BASE_RY, BASE_RZ);
-  var model = null, running = false, rafId = null, active = false, seen = false, loaded = false;
-
-  // pointer target (tx,ty) + eased plane position (px,py) + smoothed velocity (vx,vy)
-  var tx = window.innerWidth * 0.5, ty = window.innerHeight * 0.4, px = tx, py = ty;
+  var tx = innerWidth*0.5, ty = innerHeight*0.4, px = tx, py = ty;   // target + eased position
   var vx = 0, vy = 0, bank = 0, pitch = 0, phase = 0, idleT = 0;
+  var active = false, seen = false, running = false, rafId = null;
 
-  function place(){
-    var fw = frame.offsetWidth, fh = frame.offsetHeight;
-    frame.style.transform = "translate(" + (px - fw/2).toFixed(1) + "px," + (py - fh/2).toFixed(1) + "px)";
-  }
   function allowed(){ return !document.body.classList.contains("reduced"); }
-  function activate(){ if(active || !loaded || !allowed()) return; active = true; document.body.classList.add("rch-cursor"); start(); }
+  function activate(){ if(active || !allowed()) return; active = true; document.body.classList.add("rch-cursor"); start(); }
   function deactivate(){ active = false; document.body.classList.remove("rch-cursor"); stop(); }
 
-  var loader = new THREE.GLTFLoader();
-  loader.load(GLB_SRC, function(gltf){
-    model = gltf.scene;
-    // Tame the material: Meshy exports metallic 1.0 -> force matte paper
-    model.traverse(function(o){
-      if(o.isMesh && o.material){
-        var m = o.material;
-        if("metalness" in m) m.metalness = 0.15;
-        if("roughness" in m) m.roughness = 0.62;
-        m.needsUpdate = true;
-      }
-    });
-    var box = new THREE.Box3().setFromObject(model);
-    var size = box.getSize(new THREE.Vector3());
-    var center = box.getCenter(new THREE.Vector3());
-    model.position.sub(center);
-    var maxDim = Math.max(size.x, size.y, size.z) || 1;
-    model.scale.setScalar(2.7 / maxDim);
-    pivot.add(model);
-    loaded = true; resize();
-    if(seen) activate();   // pointer already moved before the model finished loading
-  }, undefined, function(err){
-    console.warn("RCH plane cursor: model failed to load.", err); cleanup();
-  });
+  var last = 0;
+  function tick(now){
+    if(!running) return;
+    rafId = requestAnimationFrame(tick);
+    var dt = Math.min((now-last)/1000, 0.05) || 0.016; last = now;
+    var dx = tx - px, dy = ty - py;
+    px += dx * 0.20; py += dy * 0.20;                 // eased follow
+    frame.style.transform = "translate(" + (px-26).toFixed(1) + "px," + (py-26).toFixed(1) + "px)";
+    vx += (dx - vx) * 0.25; vy += (dy - vy) * 0.25;   // smoothed velocity
+    var speed = Math.min(Math.hypot(vx,vy)/55, 1);
+    var rtl = document.documentElement.dir === "rtl", dir = rtl ? -1 : 1;
+    var bankT  = Math.max(-26, Math.min(26,  vx * 0.55)) * dir;   // roll into horizontal motion
+    var pitchT = Math.max(-16, Math.min(16, -vy * 0.35));         // pitch with vertical motion
+    bank  += (bankT  - bank ) * 0.14;
+    pitch += (pitchT - pitch) * 0.12;
+    phase += dt * (3 + speed * 26);
+    var bob = Math.sin(phase) * (0.5 + speed*1.6);
+    var flr = Math.sin(phase*1.3) * speed * 3;
+    var baseRTL = rtl ? "scaleX(-1) " : "";
+    craft.style.transform = baseRTL + "perspective(300px) rotateX(" + pitch + "deg) rotateZ(" + (bank+flr) + "deg) translateY(" + bob + "px)";
+    if(speed < 0.003 && Math.abs(dx) < 0.4 && Math.abs(dy) < 0.4){ idleT += dt; if(idleT > 0.5) stop(); } else idleT = 0;
+  }
+  function start(){ if(running || !active) return; running = true; last = performance.now(); rafId = requestAnimationFrame(tick); }
+  function stop(){ running = false; if(rafId) cancelAnimationFrame(rafId); rafId = null; }
 
-  // ---- Pointer drive ----
   window.addEventListener("pointermove", function(e){
-    if(e.pointerType === "touch") return;         // ignore touch input
+    if(e.pointerType === "touch") return;
     tx = e.clientX; ty = e.clientY;
-    if(!seen){ seen = true; px = tx; py = ty; }    // snap on first move (no fly-in from origin)
+    if(!seen){ seen = true; px = tx; py = ty; }
     if(!allowed()){ if(active) deactivate(); return; }
     activate(); start();
   }, {passive:true});
-  // A touch tap disables the plane cursor for the session (hybrid devices).
   window.addEventListener("pointerdown", function(e){ if(e.pointerType === "touch") deactivate(); });
   document.addEventListener("mouseleave", function(){ frame.style.opacity = "0"; });
   document.addEventListener("mouseenter", function(){ frame.style.opacity = "1"; });
-
-  var clock = new THREE.Clock();
-  function render(){
-    if(!running) return;
-    rafId = requestAnimationFrame(render);
-    var dt = Math.min(clock.getDelta(), 0.05);
-
-    var dx = tx - px, dy = ty - py;
-    px += dx * 0.18; py += dy * 0.18;              // eased follow (smoothing)
-    place();
-
-    vx += (dx - vx) * 0.25; vy += (dy - vy) * 0.25;  // smoothed velocity
-    var speed = Math.min(Math.sqrt(vx*vx + vy*vy) / 60, 1);
-    var bankT  = Math.max(-0.6, Math.min(0.6,  vx * 0.010));   // roll into horizontal motion
-    var pitchT = Math.max(-0.4, Math.min(0.4, -vy * 0.008));   // pitch with vertical motion
-    bank  += (bankT  - bank ) * 0.12;
-    pitch += (pitchT - pitch) * 0.10;
-    phase += dt * (2 + speed * 30);
-    var bob = Math.sin(phase) * 0.04 * (0.4 + speed);          // micro-oscillation in flight
-
-    pivot.rotation.z = BASE_RZ + bank + Math.sin(phase*1.3) * speed * 0.05;
-    pivot.rotation.x = BASE_RX + pitch + bob;
-    pivot.rotation.y = BASE_RY;
-
-    renderer.render(scene, camera);
-
-    // idle-pause once the pointer is still and the craft has settled
-    if(speed < 0.002 && Math.abs(dx) < 0.4 && Math.abs(dy) < 0.4 && Math.abs(bank) < 0.01 && Math.abs(pitch) < 0.01){
-      idleT += dt; if(idleT > 0.5){ stop(); }
-    } else idleT = 0;
-  }
-  function start(){ if(running || !active) return; running = true; clock.getDelta(); rafId = requestAnimationFrame(render); }
-  function stop(){ running = false; if(rafId) cancelAnimationFrame(rafId); rafId = null; }
-
-  function resize(){
-    var w = mount.clientWidth, h = mount.clientHeight;
-    if(!w || !h) return;
-    renderer.setSize(w, h, false);
-    camera.aspect = w/h; camera.updateProjectionMatrix();
-    place(); if(model && !running) renderer.render(scene, camera);
-  }
-  window.addEventListener("resize", resize);
   document.addEventListener("visibilitychange", function(){ if(document.hidden) stop(); else if(active) start(); });
 
-  function cleanup(){
-    deactivate();
-    window.removeEventListener("resize", resize);
-    if(model) model.traverse(function(o){
-      if(o.isMesh){ if(o.geometry) o.geometry.dispose();
-        if(o.material){ [].concat(o.material).forEach(function(m){
-          Object.keys(m).forEach(function(k){ if(m[k] && m[k].isTexture) m[k].dispose(); });
-          m.dispose(); }); } }
-    });
-    if(renderer){ renderer.dispose(); if(renderer.domElement && renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement); }
-  }
-
-  // Exposed for the demo "Reduce motion" toggle (deactivate = hide plane + restore cursor).
-  window.__rchLogo3D = { start:start, stop:stop, deactivate:deactivate, cleanup:cleanup };
+  // Exposed for the demo "Reduce motion" toggle.
+  window.__rchLogo3D = { deactivate:deactivate, stop:stop, start:start };
 })();
 </script>
 </body>
