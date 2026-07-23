@@ -16,28 +16,30 @@
    Here they are self-contained so the design can be previewed as one page.
    ========================================================================= */
 :root{
-  /* ---- Accents aligned to RCH Saudi ---- */
-  --accent:#AF1882;          /* Saudi magenta-violet — single brand accent */
-  --accent-600:#8f1468;
-  --indigo:#293d81;          /* Saudi secondary — rich panels */
-  --indigo-700:#1f2e63;
-  /* Legacy names kept, re-pointed, so existing rules adopt the new palette.
+  /* ---- RCH brand ---- */
+  --accent:#D6286B;          /* Qatar magenta — single brand accent */
+  --accent-600:#b71f59;
+  --rch-navy:#1A3A5C;        /* RCH blue — dark surfaces (replaces all black) */
+  --navy-elev:#21496f;       /* lighter navy for elevated panels on navy sections */
+  --indigo:#1A3A5C;          /* legacy alias -> RCH navy */
+  --indigo-700:#15304c;
+  /* Legacy names kept, re-pointed, so existing rules adopt the palette.
      Text/border/muted are CONTEXT vars: flipped inside .section--dark. */
   --magenta:var(--accent);
   --magenta-600:var(--accent-600);
   --white:#FFFFFF;
-  --black:#0A0D12;           /* Saudi near-black (the "noir" of the B&W scheme) */
-  --black-800:#111726;
-  --navy:var(--ink);         /* legacy alias -> current context ink */
-  --navy-700:#141a2a;
-  --navy-900:#0b0f16;
+  --black:#1A3A5C;           /* no pure black — RCH navy */
+  --black-800:#21496f;
+  --navy:var(--ink);         /* legacy alias -> current context ink (flips per section) */
+  --navy-700:#21496f;
+  --navy-900:#0f2338;
   --gray-50:#f5f7ff;
   --gray-200:var(--line);
   --gray-500:var(--muted);
   /* ---- Context (LIGHT default) ---- */
   --surface:#FFFFFF;         /* section background */
   --surface-2:#f5f7ff;
-  --ink:#0A0D12;             /* body text */
+  --ink:#1A3A5C;             /* body text */
   --muted:#535862;           /* secondary text */
   --line:#e6e8f0;            /* borders */
   --card:#FFFFFF;            /* card background */
@@ -49,33 +51,34 @@
   --r-card:12px;
   --r-lg:16px;
   /* Shadow — layered, near-black tinted */
-  --shadow-xs:0 1px 2px rgba(10,13,18,.05);
-  --shadow-sm:0 1px 2px rgba(10,13,18,.06),0 2px 6px rgba(10,13,18,.05);
-  --shadow-md:0 2px 6px rgba(10,13,18,.06),0 14px 34px rgba(10,13,18,.12);
-  --shadow-lg:0 6px 14px rgba(10,13,18,.10),0 30px 70px rgba(10,13,18,.16);
-  --shadow-plane:0 6px 8px rgba(10,13,18,.30),0 2px 3px rgba(143,20,104,.35);
+  --shadow-xs:0 1px 2px rgba(26,58,92,.05);
+  --shadow-sm:0 1px 2px rgba(26,58,92,.06),0 2px 6px rgba(26,58,92,.05);
+  --shadow-md:0 2px 6px rgba(26,58,92,.06),0 14px 34px rgba(26,58,92,.12);
+  --shadow-lg:0 6px 14px rgba(26,58,92,.10),0 30px 70px rgba(26,58,92,.16);
+  --shadow-plane:0 6px 8px rgba(26,58,92,.30),0 2px 3px rgba(168,30,84,.35);
   /* Faceted paper-plane logo — Saudi accent two-tone */
-  --plane-light:#c72e9c;
-  --plane:#AF1882;
-  --plane-dark:#7d1259;
+  --plane-light:#E0417D;
+  --plane:#D6286B;
+  --plane-dark:#A81E54;
   --plane-accent:#F4B93E;   /* tiny keel accent from the brand logo */
   --plane-accent2:#2FB6D6;
   /* Type & rhythm */
-  --font:"Inter","Noto Sans Arabic","Noto Sans SC",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
-  --maxw:1200px;
-  --gutter:clamp(20px,5vw,48px);
+  --font:"Inter","Cairo","Noto Sans Arabic","Noto Sans SC",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+  --maxw:1360px;                 /* widened from 1200 to better fill large screens */
+  --gutter:clamp(20px,4.5vw,56px);
   --section-y:clamp(64px,9vw,128px);
   --ease:cubic-bezier(.22,.61,.36,1);
 }
 /* ---- Context (DARK sections: near-black surfaces, white text) ---- */
 .section--dark,.footer{
-  --surface:#0A0D12;
-  --surface-2:#111726;
+  --surface:#1A3A5C;
+  --surface-2:#21496f;
   --ink:#FFFFFF;
-  --muted:#9aa6b6;
-  --line:rgba(255,255,255,.14);
-  --card:#121826;
-  --card-grad:linear-gradient(180deg,#141a2a 0%,#0f1420 100%);
+  --muted:#aebfd2;
+  --line:rgba(255,255,255,.15);
+  --card:#21496f;
+  --card-grad:linear-gradient(180deg,#26507a 0%,#1c3f63 100%);
+  --magenta:#F2669F;         /* lighter magenta so accent text stays legible on navy (WCAG AA) */
   background:var(--surface);
   color:var(--ink);
 }
@@ -113,7 +116,7 @@ img{max-width:100%;display:block}
   white-space:nowrap;
 }
 .btn--primary{background:var(--magenta);color:#fff}
-.btn--primary:hover{background:var(--magenta-600);transform:translateY(-1px);box-shadow:0 10px 24px rgba(175,24,130,.28)}
+.btn--primary:hover{background:var(--magenta-600);transform:translateY(-1px);box-shadow:0 10px 24px rgba(214,40,107,.28)}
 .btn--ghost{background:transparent;color:var(--navy);border-color:var(--line)}
 .btn--ghost:hover{border-color:var(--navy);background:var(--card);transform:translateY(-1px)}
 .btn .pplane{width:16px;height:16px;transition:transform .3s var(--ease)}
@@ -135,7 +138,7 @@ img{max-width:100%;display:block}
 .nav.is-scrolled{border-color:var(--line)}
 .nav__inner{display:flex;align-items:center;gap:24px;height:64px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.02em;font-size:1.15rem;color:var(--navy)}
-.brand .mark{width:28px;height:28px;flex:none;filter:drop-shadow(0 2px 3px rgba(10,13,18,.20));
+.brand .mark{width:28px;height:28px;flex:none;filter:drop-shadow(0 2px 3px rgba(26,58,92,.20));
   transition:transform .45s var(--ease)}
 .brand:hover .mark{transform:translate(2px,-2px) rotate(-6deg)}
 [dir="rtl"] .brand .mark{transform:scaleX(-1)}
@@ -193,7 +196,7 @@ img{max-width:100%;display:block}
 .hero__photo::after{content:"";position:absolute;inset:0;pointer-events:none;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);border-radius:inherit}
 .hero__visual .halo{position:absolute;inset:-6% -8% auto -8%;aspect-ratio:1;border-radius:50%;
-  background:radial-gradient(circle at 60% 40%,rgba(175,24,130,.16),transparent 62%);filter:blur(8px);z-index:-1}
+  background:radial-gradient(circle at 60% 40%,rgba(214,40,107,.16),transparent 62%);filter:blur(8px);z-index:-1}
 @media(max-width:768px){
   .hero__grid{grid-template-columns:1fr;text-align:center}
   .hero__sub{margin-inline:auto}
@@ -202,18 +205,23 @@ img{max-width:100%;display:block}
   .eyebrow{justify-content:center}
 }
 
-/* Scroll-driven 3D plane frame (CSS-moved carriage; attitude done in-scene) */
-#rch-plane-flight{position:fixed;inset-block-start:0;inset-inline-start:0;z-index:60;pointer-events:none;
-  width:clamp(120px,14vw,190px);aspect-ratio:1;will-change:transform;
-  filter:drop-shadow(0 14px 22px rgba(10,13,18,.22))}
+/* Cursor 3D plane — a fixed frame that follows the pointer (attitude done in-scene).
+   Hidden by default; JS reveals it (adds body.rch-cursor) only on fine-pointer +
+   WebGL + no reduced-motion. z-index above everything so it reads as the cursor. */
+#rch-plane-flight{position:fixed;inset-block-start:0;inset-inline-start:0;z-index:9999;pointer-events:none;
+  width:clamp(84px,8vw,120px);aspect-ratio:1;will-change:transform;display:none;
+  filter:drop-shadow(0 10px 16px rgba(26,58,92,.28))}
+body.rch-cursor #rch-plane-flight{display:block}
 #rch-plane-flight .pf__canvas{position:absolute;inset:0}
 #rch-plane-flight .pf__canvas canvas{display:block;width:100%!important;height:100%!important}
-#rch-plane-flight .pf__fallback{position:absolute;inset:0;margin:auto;width:60%;height:auto;display:none}
-.no-webgl #rch-plane-flight .pf__fallback{display:block}
-.no-webgl #rch-plane-flight .pf__canvas{display:none}
-@media(max-width:768px){ #rch-plane-flight{width:clamp(110px,26vw,150px)} }
-/* On phones the photo carries the hero; the fixed overlay plane is hidden to avoid clutter */
-@media(max-width:640px){ #rch-plane-flight{display:none} }
+#rch-plane-flight .pf__fallback{display:none}
+/* Hide the system cursor while the plane cursor is active, but keep a usable
+   cursor on anything interactive so links/buttons/fields stay clear. */
+body.rch-cursor{cursor:none}
+body.rch-cursor a,body.rch-cursor button,body.rch-cursor summary,
+body.rch-cursor [role="button"],body.rch-cursor .lang__menu li,
+body.rch-cursor label,body.rch-cursor select{cursor:pointer}
+body.rch-cursor input,body.rch-cursor textarea,body.rch-cursor [contenteditable]{cursor:text}
 
 /* ============ Reveal system (JS adds .rv, then .in) ============ */
 .rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
@@ -254,7 +262,7 @@ img{max-width:100%;display:block}
   transition:transform .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease)}
 .rapid__card:hover{transform:translateY(-6px);border-color:transparent;box-shadow:var(--shadow-md)}
 .rapid__l{width:44px;height:44px;border-radius:11px;display:grid;place-items:center;font-weight:600;font-size:1.25rem;
-  background:rgba(175,24,130,.1);color:var(--magenta);margin-bottom:18px}
+  background:rgba(214,40,107,.1);color:var(--magenta);margin-bottom:18px}
 .rapid__card h4{font-size:1.05rem}
 .rapid__card p{margin-block-start:8px;font-size:.9rem;color:var(--muted);line-height:1.45}
 @media(max-width:1024px){.rapid{grid-template-columns:repeat(2,1fr)}}
@@ -268,7 +276,7 @@ img{max-width:100%;display:block}
 .svc__card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
 .svc__card--wide{grid-column:span 3}
 .svc__ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:var(--magenta);
-  background:rgba(175,24,130,.09);margin-bottom:20px}
+  background:rgba(214,40,107,.09);margin-bottom:20px}
 .svc__ic svg{width:24px;height:24px}
 .svc__card h3{font-size:1.25rem}
 .svc__card>p{margin-block-start:12px;color:var(--muted);font-size:.95rem}
@@ -289,7 +297,7 @@ img{max-width:100%;display:block}
 .why{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,64px);align-items:center}
 .why__panel{background:var(--indigo);color:#fff;border-radius:var(--r-lg);padding:clamp(32px,4vw,52px);position:relative;overflow:hidden}
 .why__panel::after{content:"";position:absolute;inset-block-end:-40%;inset-inline-end:-20%;width:70%;aspect-ratio:1;
-  border-radius:50%;background:radial-gradient(circle,rgba(175,24,130,.35),transparent 60%)}
+  border-radius:50%;background:radial-gradient(circle,rgba(214,40,107,.35),transparent 60%)}
 .why__panel h2{font-size:clamp(1.7rem,3vw,2.4rem);position:relative}
 .why__panel p{margin-block-start:20px;color:#dfe7f0;font-size:1.05rem;position:relative}
 .why__facts{display:grid;gap:18px}
@@ -343,8 +351,8 @@ img{max-width:100%;display:block}
 .post:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
 .post__img{aspect-ratio:16/9;background:var(--gray-50);position:relative;overflow:hidden}
 .post__img::after{content:"";position:absolute;inset:0;background:
-  radial-gradient(circle at 30% 30%,rgba(175,24,130,.14),transparent 55%),
-  radial-gradient(circle at 75% 70%,rgba(10,13,18,.14),transparent 55%)}
+  radial-gradient(circle at 30% 30%,rgba(214,40,107,.14),transparent 55%),
+  radial-gradient(circle at 75% 70%,rgba(26,58,92,.14),transparent 55%)}
 .post__body{padding:24px}
 .post__meta{font-size:.78rem;color:var(--magenta);font-weight:500;letter-spacing:.04em;text-transform:uppercase}
 .post__body h4{font-size:1.1rem;margin-block-start:12px;line-height:1.3}
@@ -404,37 +412,42 @@ body{background:
 .mv__card:hover,.svc__card:hover,.case:hover,.post:hover{box-shadow:var(--shadow-lg)}
 .rapid__card:hover{box-shadow:var(--shadow-md)}
 
-/* Accent/indigo panels get a soft top sheen + depth */
-.mv__card--dark,.why__panel,.case__top,.ceo__avatar{
-  background-image:linear-gradient(160deg,#31489a 0%,var(--indigo) 46%,var(--indigo-700) 100%);
+/* Navy panels get a soft top sheen + depth */
+.mv__card--dark,.case__top,.ceo__avatar{
+  background-image:linear-gradient(160deg,#22588a 0%,var(--rch-navy) 46%,var(--navy-900) 100%);
   position:relative;isolation:isolate;
+}
+/* Why panel sits on a navy section — lift it with a lighter navy + stronger shadow */
+.why__panel{
+  background-image:linear-gradient(160deg,#2f628f 0%,#26507a 55%,#1c3f63 100%);
+  position:relative;isolation:isolate;box-shadow:0 20px 50px rgba(6,18,33,.45);
 }
 .mv__card--dark::before,.why__panel::before{
   content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
-  background:radial-gradient(90% 60% at 12% 0%, rgba(255,255,255,.10), transparent 60%);
+  background:radial-gradient(90% 60% at 12% 0%, rgba(255,255,255,.12), transparent 60%);
 }
-.mv__card--dark,.why__panel{box-shadow:var(--shadow-md)}
+.mv__card--dark{box-shadow:var(--shadow-md)}
 
 /* Primary CTA: gentle vertical sheen + resting magenta-tinted shadow */
 .btn--primary{
-  background-image:linear-gradient(180deg,#c72e9c 0%,var(--accent) 55%,#8f1468 100%);
-  box-shadow:0 1px 2px rgba(143,20,104,.30),0 8px 18px rgba(175,24,130,.22);
+  background-image:linear-gradient(180deg,#E0417D 0%,var(--accent) 55%,#b71f59 100%);
+  box-shadow:0 1px 2px rgba(168,30,84,.30),0 8px 18px rgba(214,40,107,.22);
 }
-.btn--primary:hover{box-shadow:0 2px 4px rgba(143,20,104,.34),0 14px 30px rgba(175,24,130,.30)}
+.btn--primary:hover{box-shadow:0 2px 4px rgba(168,30,84,.34),0 14px 30px rgba(214,40,107,.30)}
 .btn--ghost{background-image:var(--card-grad);box-shadow:var(--shadow-xs)}
 
 /* Nav: a touch more presence when scrolled */
-.nav.is-scrolled{background:rgba(255,255,255,.82);box-shadow:0 1px 0 rgba(10,13,18,.04),0 8px 24px rgba(10,13,18,.06)}
+.nav.is-scrolled{background:rgba(255,255,255,.82);box-shadow:0 1px 0 rgba(26,58,92,.04),0 8px 24px rgba(26,58,92,.06)}
 
 /* Service & value icons: soft dimensional chip */
 .svc__ic,.rapid__l{
-  background-image:linear-gradient(160deg,rgba(175,24,130,.16),rgba(175,24,130,.06));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 10px rgba(175,24,130,.10);
+  background-image:linear-gradient(160deg,rgba(214,40,107,.16),rgba(214,40,107,.06));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 4px 10px rgba(214,40,107,.10);
 }
 
 /* Case & blog media: richer, more photographic placeholder surfaces */
 .case__top{background-image:
-  radial-gradient(120% 100% at 100% 0%, rgba(175,24,130,.32), transparent 55%),
+  radial-gradient(120% 100% at 100% 0%, rgba(214,40,107,.32), transparent 55%),
   linear-gradient(160deg,var(--indigo),var(--navy-900));}
 .post__img{background:var(--surface-2)}
 .post__img::after{opacity:.9}
@@ -444,6 +457,17 @@ body{background:
 
 /* Focus ring stays crisp above the new surfaces */
 :focus-visible{outline:2px solid var(--magenta);outline-offset:3px}
+
+/* ---- RTL / i18n polish ---- */
+/* Keep numerals (years, counters, stats) rendering left-to-right inside RTL text */
+.stat__num,.case__top .big,.why__fact .n{direction:ltr;unicode-bidi:isolate;unicode-bidi:plaintext}
+/* Arabic reads better with a touch more line-height and no negative tracking */
+:root:lang(ar) body,[lang="ar"]{letter-spacing:normal}
+[lang="ar"] .hero__title,[lang="ar"] .shead h2,[lang="ar"] .why__panel h2{letter-spacing:normal;line-height:1.2}
+[lang="ar"] p{line-height:1.7}
+/* Flip directional chevrons/arrows in RTL */
+[dir="rtl"] .svc__more svg,[dir="rtl"] .lang__btn .chev{}
+[dir="rtl"] .case__top .tag{direction:rtl}
 
 /* Reduced motion — kill everything (incl. the flying plane: static attitude only) */
 @media (prefers-reduced-motion:reduce){
@@ -476,9 +500,9 @@ body{background:
 <!-- Scroll progress (neutral thin bar) -->
 <div id="rch-progress" aria-hidden="true"><div class="track"></div></div>
 
-<!-- ============ Scroll-driven 3D paper plane (was the hero logo; now flies down the page).
-     The frame is translated along the viewport by JS (CSS-moved frame); banking/pitch are
-     real 3D rotation in-scene. Static image fallback for no-WebGL / reduced-motion. -->
+<!-- ============ 3D paper-plane cursor. The Three.js canvas lives in this fixed frame,
+     which JS moves to follow the mouse (banking/pitch in-scene). Shown only on a real
+     mouse + WebGL + motion allowed; otherwise hidden and the system cursor stays. -->
 <div id="rch-plane-flight" aria-hidden="true">
   <div class="pf__canvas"></div>
   <img class="pf__fallback" src="assets/rch-logo-fallback.png" alt="" width="120" height="95">
@@ -515,7 +539,7 @@ body{background:
           <li role="option" data-lang="zh" data-dir="ltr" data-code="中文">中文 <span class="tag">ZH</span></li>
         </ul>
       </div>
-      <a class="btn btn--primary" href="#contact">Get started
+      <a class="btn btn--primary" href="#contact"><span data-i18n="cta_get_started">Get started</span>
         <svg class="pplane" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
       </a>
       <button class="nav__burger" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
@@ -528,28 +552,28 @@ body{background:
 <section class="hero" aria-label="Introduction">
   <div class="wrap hero__grid">
     <div class="hero__copy">
-      <span class="eyebrow rv">PRO Services · Company Formation · Qatar</span>
-      <h1 class="hero__title rv rv-d1">Local knowledge,<br><span class="accent">global reach.</span></h1>
-      <p class="hero__sub rv rv-d2">Your strategic partner for PRO services, immigration and company formation in Qatar — so you can focus on what matters.</p>
-      <p class="hero__meta rv rv-d2">Accredited by the Ministry of Interior · Established 2003</p>
+      <span class="eyebrow rv" data-i18n="hero_eyebrow">PRO Services · Company Formation · Qatar</span>
+      <h1 class="hero__title rv rv-d1" data-i18n-html="hero_title">Local knowledge,<br><span class="accent">global reach.</span></h1>
+      <p class="hero__sub rv rv-d2" data-i18n="hero_sub">Your strategic partner for PRO services, immigration and company formation in Qatar — so you can focus on what matters.</p>
+      <p class="hero__meta rv rv-d2" data-i18n="hero_meta">Accredited by the Ministry of Interior · Established 2003</p>
       <div class="hero__cta rv rv-d3">
-        <a class="btn btn--primary" href="#contact">Start your journey
+        <a class="btn btn--primary" href="#contact"><span data-i18n="cta_start">Start your journey</span>
           <svg class="pplane" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
         </a>
-        <a class="btn btn--ghost" href="#services">Explore services</a>
+        <a class="btn btn--ghost" href="#services" data-i18n="cta_explore">Explore services</a>
       </div>
       <div class="hero__stats rv rv-d4">
         <div class="stat">
           <div class="stat__num" data-count="2003" data-plain="1">2003</div>
-          <div class="stat__label">Established in Qatar</div>
+          <div class="stat__label" data-i18n="stat1">Established in Qatar</div>
         </div>
         <div class="stat">
           <div class="stat__num"><span data-count="20">0</span><span class="u">+</span></div>
-          <div class="stat__label">Years of local expertise</div>
+          <div class="stat__label" data-i18n="stat2">Years of local expertise</div>
         </div>
         <div class="stat">
           <div class="stat__num"><span data-count="30">0</span><span class="u">+</span></div>
-          <div class="stat__label">Government services covered</div>
+          <div class="stat__label" data-i18n="stat3">Government services covered</div>
         </div>
       </div>
     </div>
@@ -568,8 +592,8 @@ body{background:
   <div class="wrap ceo">
     <div class="ceo__avatar rv" aria-hidden="true">TM</div>
     <div>
-      <p class="ceo__q rv rv-d1">“We help business leaders manage their relationship with government, <span class="mk">so they can focus on what matters.</span>”</p>
-      <p class="ceo__who rv rv-d2"><strong>Tayseer N. Malkawi</strong> · Chief Executive Officer, RCH Qatar</p>
+      <p class="ceo__q rv rv-d1" data-i18n-html="ceo_quote">“We help business leaders manage their relationship with government, <span class="mk">so they can focus on what matters.</span>”</p>
+      <p class="ceo__who rv rv-d2" data-i18n-html="ceo_who"><strong>Tayseer N. Malkawi</strong> · Chief Executive Officer, RCH Qatar</p>
     </div>
   </div>
 </section>
@@ -578,20 +602,20 @@ body{background:
 <section class="section" id="about" aria-label="About RCH">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">About us</span>
-      <h2 class="rv rv-d1">A limited liability company, officially accredited in Qatar since 2003.</h2>
-      <p class="rv rv-d2">RCH offers Corporate Services, Employee PRO Services, Partnership, Supporting Services and Business Consultancy — staffed by skilled professionals delivering reliable governmental solutions to private and public sector clients. We constantly strive to make working with the government simple.</p>
+      <span class="eyebrow rv" data-i18n="about_eyebrow">About us</span>
+      <h2 class="rv rv-d1" data-i18n="about_title">A limited liability company, officially accredited in Qatar since 2003.</h2>
+      <p class="rv rv-d2" data-i18n="about_body">RCH offers Corporate Services, Employee PRO Services, Partnership, Supporting Services and Business Consultancy — staffed by skilled professionals delivering reliable governmental solutions to private and public sector clients. We constantly strive to make working with the government simple.</p>
     </div>
     <div class="mv">
       <div class="mv__card rv rv-d1">
-        <div class="mv__k">Our mission</div>
-        <h3>Focus on what matters</h3>
-        <p>To help business leaders and corporations manage their relationship with government, so they can focus on what matters.</p>
+        <div class="mv__k" data-i18n="mission_k">Our mission</div>
+        <h3 data-i18n="mission_h">Focus on what matters</h3>
+        <p data-i18n="mission_p">To help business leaders and corporations manage their relationship with government, so they can focus on what matters.</p>
       </div>
       <div class="mv__card mv__card--dark rv rv-d2">
-        <div class="mv__k">Our vision</div>
-        <h3>Execution starts with us</h3>
-        <p>To provide best-in-class government relations services for the entrepreneurial mind. Execution starts with us.</p>
+        <div class="mv__k" data-i18n="vision_k">Our vision</div>
+        <h3 data-i18n="vision_h">Execution starts with us</h3>
+        <p data-i18n="vision_p">To provide best-in-class government relations services for the entrepreneurial mind. Execution starts with us.</p>
       </div>
     </div>
   </div>
@@ -601,15 +625,15 @@ body{background:
 <section class="section section--dark" aria-label="Core values">
   <div class="wrap">
     <div class="shead shead--center">
-      <span class="eyebrow rv">Our core values</span>
-      <h2 class="rv rv-d1">RAPID — the way we work</h2>
+      <span class="eyebrow rv" data-i18n="rapid_eyebrow">Our core values</span>
+      <h2 class="rv rv-d1" data-i18n="rapid_title">RAPID — the way we work</h2>
     </div>
     <div class="rapid">
-      <div class="rapid__card rv"><div class="rapid__l">R</div><h4>Reliability</h4><p>We will be there, meeting the urgency of the situation.</p></div>
-      <div class="rapid__card rv rv-d1"><div class="rapid__l">A</div><h4>Adaptability</h4><p>Tailored services based on your needs.</p></div>
-      <div class="rapid__card rv rv-d2"><div class="rapid__l">P</div><h4>Passion</h4><p>Professionals who know the services they provide.</p></div>
-      <div class="rapid__card rv rv-d3"><div class="rapid__l">I</div><h4>Immediacy</h4><p>Your time is valuable, and we know it.</p></div>
-      <div class="rapid__card rv rv-d4"><div class="rapid__l">D</div><h4>Determination</h4><p>Someone to get things done.</p></div>
+      <div class="rapid__card rv"><div class="rapid__l">R</div><h4 data-i18n="val_r_h">Reliability</h4><p data-i18n="val_r_p">We will be there, meeting the urgency of the situation.</p></div>
+      <div class="rapid__card rv rv-d1"><div class="rapid__l">A</div><h4 data-i18n="val_a_h">Adaptability</h4><p data-i18n="val_a_p">Tailored services based on your needs.</p></div>
+      <div class="rapid__card rv rv-d2"><div class="rapid__l">P</div><h4 data-i18n="val_p_h">Passion</h4><p data-i18n="val_p_p">Professionals who know the services they provide.</p></div>
+      <div class="rapid__card rv rv-d3"><div class="rapid__l">I</div><h4 data-i18n="val_i_h">Immediacy</h4><p data-i18n="val_i_p">Your time is valuable, and we know it.</p></div>
+      <div class="rapid__card rv rv-d4"><div class="rapid__l">D</div><h4 data-i18n="val_d_h">Determination</h4><p data-i18n="val_d_p">Someone to get things done.</p></div>
     </div>
   </div>
 </section>
@@ -618,53 +642,53 @@ body{background:
 <section class="section" id="services" aria-label="Services">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">What we do</span>
-      <h2 class="rv rv-d1">Everything your business needs to launch and operate in Qatar.</h2>
-      <p class="rv rv-d2">A comprehensive range of services designed to simplify your operations and ensure full compliance with Qatari regulations.</p>
+      <span class="eyebrow rv" data-i18n="svc_eyebrow">What we do</span>
+      <h2 class="rv rv-d1" data-i18n="svc_title">Everything your business needs to launch and operate in Qatar.</h2>
+      <p class="rv rv-d2" data-i18n="svc_body">A comprehensive range of services designed to simplify your operations and ensure full compliance with Qatari regulations.</p>
     </div>
     <div class="svc">
       <article class="svc__card svc__card--wide rv">
         <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M6 21V7l6-4 6 4v14M10 21v-5h4v5"/></svg></div>
-        <h3>Company Formation</h3>
-        <p>End-to-end setup, structured for approved activities and foreign investors.</p>
+        <h3 data-i18n="svc1_h">Company Formation</h3>
+        <p data-i18n="svc1_p">End-to-end setup, structured for approved activities and foreign investors.</p>
         <ul class="svc__list">
-          <li>100% foreign ownership for approved activities</li>
-          <li>L.L.C. formation with a Qatari partner (51%–49%)</li>
-          <li>Branch establishment for government / semi-government projects</li>
-          <li>Representative office setup</li>
+          <li data-i18n="svc1_i1">100% foreign ownership for approved activities</li>
+          <li data-i18n="svc1_i2">L.L.C. formation with a Qatari partner (51%–49%)</li>
+          <li data-i18n="svc1_i3">Branch establishment for government / semi-government projects</li>
+          <li data-i18n="svc1_i4">Representative office setup</li>
         </ul>
-        <span class="svc__more">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="svc__more"><span data-i18n="learn_more">Learn more</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </article>
       <article class="svc__card svc__card--wide rv rv-d1">
         <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z"/></svg></div>
-        <h3>PRO Services</h3>
-        <p>Reliable handling of every government-facing task, end to end.</p>
+        <h3 data-i18n="svc2_h">PRO Services</h3>
+        <p data-i18n="svc2_p">Reliable handling of every government-facing task, end to end.</p>
         <ul class="svc__list">
-          <li>Visa, work permit & family residence processing</li>
-          <li>Document attestation & legalization</li>
-          <li>Trade license & commercial registration</li>
-          <li>Ministry approvals & government liaison</li>
-          <li>Labor, immigration & QID · sponsorship transfers</li>
+          <li data-i18n="svc2_i1">Visa, work permit & family residence processing</li>
+          <li data-i18n="svc2_i2">Document attestation & legalization</li>
+          <li data-i18n="svc2_i3">Trade license & commercial registration</li>
+          <li data-i18n="svc2_i4">Ministry approvals & government liaison</li>
+          <li data-i18n="svc2_i5">Labor, immigration & QID · sponsorship transfers</li>
         </ul>
-        <span class="svc__more">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="svc__more"><span data-i18n="learn_more">Learn more</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </article>
       <article class="svc__card rv rv-d2">
         <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13A4 4 0 0 1 16 11"/></svg></div>
-        <h3>Partnership</h3>
-        <p>Corporate registrations, approvals and long-term partnership support.</p>
-        <span class="svc__more">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <h3 data-i18n="svc3_h">Partnership</h3>
+        <p data-i18n="svc3_p">Corporate registrations, approvals and long-term partnership support.</p>
+        <span class="svc__more"><span data-i18n="learn_more">Learn more</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </article>
       <article class="svc__card rv rv-d3">
         <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6M9 13h6M9 17h6"/></svg></div>
-        <h3>Supporting Services</h3>
-        <p>Payroll & WPS, accounting, tax, legal advisory and certified translation.</p>
-        <span class="svc__more">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <h3 data-i18n="svc4_h">Supporting Services</h3>
+        <p data-i18n="svc4_p">Payroll & WPS, accounting, tax, legal advisory and certified translation.</p>
+        <span class="svc__more"><span data-i18n="learn_more">Learn more</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </article>
       <article class="svc__card rv rv-d4">
         <div class="svc__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18M7 15l4-4 3 3 5-6"/></svg></div>
-        <h3>Business Consultation</h3>
-        <p>Forecasting, market intelligence, strategic planning and company evaluation.</p>
-        <span class="svc__more">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <h3 data-i18n="svc5_h">Business Consultation</h3>
+        <p data-i18n="svc5_p">Forecasting, market intelligence, strategic planning and company evaluation.</p>
+        <span class="svc__more"><span data-i18n="learn_more">Learn more</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </article>
     </div>
   </div>
@@ -674,13 +698,13 @@ body{background:
 <section class="section section--dark" id="why" aria-label="Why RCH">
   <div class="wrap why">
     <div class="why__panel rv">
-      <h2>Your strategic partner in business success</h2>
-      <p>We simplify business operations by managing all your PRO needs efficiently and reliably. With RCH Qatar you gain more than a service — a team of dedicated professionals at a fraction of the cost of hiring in-house. We don’t just provide services; we build long-term partnerships that help your business grow sustainably and confidently in the Qatari market.</p>
+      <h2 data-i18n="why_title">Your strategic partner in business success</h2>
+      <p data-i18n="why_body">We simplify business operations by managing all your PRO needs efficiently and reliably. With RCH Qatar you gain more than a service — a team of dedicated professionals at a fraction of the cost of hiring in-house. We don’t just provide services; we build long-term partnerships that help your business grow sustainably and confidently in the Qatari market.</p>
     </div>
     <div class="why__facts">
-      <div class="why__fact rv rv-d1"><div class="n">01</div><div><h4>Cost-effective</h4><p>Full PRO coverage at a fraction of in-house cost.</p></div></div>
-      <div class="why__fact rv rv-d2"><div class="n">02</div><div><h4>Time-saving</h4><p>We reduce hassle and keep you compliant, so you can focus on growth.</p></div></div>
-      <div class="why__fact rv rv-d3"><div class="n">03</div><div><h4>Extensive network</h4><p>Deep expertise and reach across every relevant ministry.</p></div></div>
+      <div class="why__fact rv rv-d1"><div class="n">01</div><div><h4 data-i18n="fact1_h">Cost-effective</h4><p data-i18n="fact1_p">Full PRO coverage at a fraction of in-house cost.</p></div></div>
+      <div class="why__fact rv rv-d2"><div class="n">02</div><div><h4 data-i18n="fact2_h">Time-saving</h4><p data-i18n="fact2_p">We reduce hassle and keep you compliant, so you can focus on growth.</p></div></div>
+      <div class="why__fact rv rv-d3"><div class="n">03</div><div><h4 data-i18n="fact3_h">Extensive network</h4><p data-i18n="fact3_p">Deep expertise and reach across every relevant ministry.</p></div></div>
     </div>
   </div>
 </section>
@@ -689,13 +713,13 @@ body{background:
 <section class="section" aria-label="Certificates">
   <div class="wrap">
     <div class="shead shead--center">
-      <span class="eyebrow rv">Certified &amp; compliant</span>
-      <h2 class="rv rv-d1">Quality, security and excellence — verified.</h2>
+      <span class="eyebrow rv" data-i18n="certs_eyebrow">Certified &amp; compliant</span>
+      <h2 class="rv rv-d1" data-i18n="certs_title">Quality, security and excellence — verified.</h2>
     </div>
     <div class="certs">
-      <div class="cert rv"><div class="badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg></div><div><h4>ISO 9001</h4><p>Quality Management</p></div></div>
-      <div class="cert rv rv-d1"><div class="badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z M9 12l2 2 4-4"/></svg></div><div><h4>ISO 27001</h4><p>Information Security</p></div></div>
-      <div class="cert rv rv-d2"><div class="badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M2 12h20"/></svg></div><div><h4>ICV Certified</h4><p>In-Country Value</p></div></div>
+      <div class="cert rv"><div class="badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/></svg></div><div><h4>ISO 9001</h4><p data-i18n="cert1_p">Quality Management</p></div></div>
+      <div class="cert rv rv-d1"><div class="badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z M9 12l2 2 4-4"/></svg></div><div><h4>ISO 27001</h4><p data-i18n="cert2_p">Information Security</p></div></div>
+      <div class="cert rv rv-d2"><div class="badge"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M2 12h20"/></svg></div><div><h4>ICV Certified</h4><p data-i18n="cert3_p">In-Country Value</p></div></div>
     </div>
   </div>
 </section>
@@ -704,21 +728,21 @@ body{background:
 <section class="section section--dark" id="cases" aria-label="Case studies">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">Case studies</span>
-      <h2 class="rv rv-d1">Outcomes we’ve delivered for clients in Qatar.</h2>
+      <span class="eyebrow rv" data-i18n="cases_eyebrow">Case studies</span>
+      <h2 class="rv rv-d1" data-i18n="cases_title">Outcomes we’ve delivered for clients in Qatar.</h2>
     </div>
     <div class="cases">
       <article class="case rv">
-        <div class="case__top"><span class="tag">Company Formation</span><div class="big">100<span class="u">%</span></div></div>
-        <div class="case__body"><h4>Foreign-owned LLC, live in weeks</h4><p>Structured a fully foreign-owned entity for an approved activity, from approvals to trade license.</p></div>
+        <div class="case__top"><span class="tag" data-i18n="svc1_h">Company Formation</span><div class="big">100<span class="u">%</span></div></div>
+        <div class="case__body"><h4 data-i18n="case1_h">Foreign-owned LLC, live in weeks</h4><p data-i18n="case1_p">Structured a fully foreign-owned entity for an approved activity, from approvals to trade license.</p></div>
       </article>
       <article class="case rv rv-d1">
-        <div class="case__top"><span class="tag">PRO Services</span><div class="big">48<span class="u">h</span></div></div>
-        <div class="case__body"><h4>Bulk visa &amp; QID processing</h4><p>Onboarded an entire team with employment visas and QIDs on a compressed timeline.</p></div>
+        <div class="case__top"><span class="tag" data-i18n="svc2_h">PRO Services</span><div class="big">48<span class="u">h</span></div></div>
+        <div class="case__body"><h4 data-i18n="case2_h">Bulk visa &amp; QID processing</h4><p data-i18n="case2_p">Onboarded an entire team with employment visas and QIDs on a compressed timeline.</p></div>
       </article>
       <article class="case rv rv-d2">
-        <div class="case__top"><span class="tag">Compliance</span><div class="big">0<span class="u">·</span></div></div>
-        <div class="case__body"><h4>Zero outstanding violations</h4><p>Cleared and prevented government fines through proactive compliance advisory.</p></div>
+        <div class="case__top"><span class="tag" data-i18n="cat_compliance">Compliance</span><div class="big">0<span class="u">·</span></div></div>
+        <div class="case__body"><h4 data-i18n="case3_h">Zero outstanding violations</h4><p data-i18n="case3_p">Cleared and prevented government fines through proactive compliance advisory.</p></div>
       </article>
     </div>
   </div>
@@ -728,8 +752,8 @@ body{background:
 <section class="section" aria-label="Clients">
   <div class="wrap">
     <div class="shead shead--center">
-      <span class="eyebrow rv">Our clients</span>
-      <h2 class="rv rv-d1">Trusted across the private and public sector.</h2>
+      <span class="eyebrow rv" data-i18n="clients_eyebrow">Our clients</span>
+      <h2 class="rv rv-d1" data-i18n="clients_title">Trusted across the private and public sector.</h2>
     </div>
   </div>
   <div class="marquee" aria-hidden="true">
@@ -750,13 +774,13 @@ body{background:
 <section class="section section--dark" id="blog" aria-label="Insights">
   <div class="wrap">
     <div class="shead">
-      <span class="eyebrow rv">Insights</span>
-      <h2 class="rv rv-d1">Guidance for doing business in Qatar.</h2>
+      <span class="eyebrow rv" data-i18n="blog_eyebrow">Insights</span>
+      <h2 class="rv rv-d1" data-i18n="blog_title">Guidance for doing business in Qatar.</h2>
     </div>
     <div class="blog">
-      <article class="post rv"><div class="post__img"></div><div class="post__body"><div class="post__meta">Company Formation</div><h4>Setting up a 100% foreign-owned company in Qatar</h4><p>What the approved-activity route means for investors, step by step.</p></div></article>
-      <article class="post rv rv-d1"><div class="post__img"></div><div class="post__body"><div class="post__meta">PRO Services</div><h4>QID, visas and work permits without the hassle</h4><p>A practical guide to onboarding employees and staying compliant.</p></div></article>
-      <article class="post rv rv-d2"><div class="post__img"></div><div class="post__body"><div class="post__meta">Compliance</div><h4>Avoiding government fines and violations</h4><p>How proactive advisory keeps your entity in good standing.</p></div></article>
+      <article class="post rv"><div class="post__img"></div><div class="post__body"><div class="post__meta" data-i18n="svc1_h">Company Formation</div><h4 data-i18n="post1_h">Setting up a 100% foreign-owned company in Qatar</h4><p data-i18n="post1_p">What the approved-activity route means for investors, step by step.</p></div></article>
+      <article class="post rv rv-d1"><div class="post__img"></div><div class="post__body"><div class="post__meta" data-i18n="svc2_h">PRO Services</div><h4 data-i18n="post2_h">QID, visas and work permits without the hassle</h4><p data-i18n="post2_p">A practical guide to onboarding employees and staying compliant.</p></div></article>
+      <article class="post rv rv-d2"><div class="post__img"></div><div class="post__body"><div class="post__meta" data-i18n="cat_compliance">Compliance</div><h4 data-i18n="post3_h">Avoiding government fines and violations</h4><p data-i18n="post3_p">How proactive advisory keeps your entity in good standing.</p></div></article>
     </div>
   </div>
 </section>
@@ -768,24 +792,24 @@ body{background:
     <div class="footer__grid">
       <div>
         <a class="brand" href="#top"><svg class="mark" aria-hidden="true"><use href="#rch-plane"/></svg> RCH Qatar</a>
-        <p class="footer__tag">Local knowledge, global reach. Your strategic partner for PRO services and company formation in Qatar.</p>
+        <p class="footer__tag" data-i18n="footer_tag">Local knowledge, global reach. Your strategic partner for PRO services and company formation in Qatar.</p>
       </div>
-      <div><h5>Services</h5><ul>
-        <li><a href="#services">Company Formation</a></li><li><a href="#services">PRO Services</a></li>
-        <li><a href="#services">Partnership</a></li><li><a href="#services">Supporting Services</a></li>
-        <li><a href="#services">Business Consultation</a></li>
+      <div><h5 data-i18n="foot_h_services">Services</h5><ul>
+        <li><a href="#services" data-i18n="svc1_h">Company Formation</a></li><li><a href="#services" data-i18n="svc2_h">PRO Services</a></li>
+        <li><a href="#services" data-i18n="svc3_h">Partnership</a></li><li><a href="#services" data-i18n="svc4_h">Supporting Services</a></li>
+        <li><a href="#services" data-i18n="svc5_h">Business Consultation</a></li>
       </ul></div>
-      <div><h5>Company</h5><ul>
-        <li><a href="#about">About us</a></li><li><a href="#why">Why RCH</a></li>
-        <li><a href="#cases">Case studies</a></li><li><a href="#blog">Insights</a></li>
+      <div><h5 data-i18n="foot_h_company">Company</h5><ul>
+        <li><a href="#about" data-i18n="foot_about">About us</a></li><li><a href="#why" data-i18n="why">Why RCH</a></li>
+        <li><a href="#cases" data-i18n="cases">Case studies</a></li><li><a href="#blog" data-i18n="insights">Insights</a></li>
       </ul></div>
-      <div><h5>Get in touch</h5><ul>
-        <li><a href="#contact">Book a consultation</a></li><li><a href="#contact">Doha, Qatar</a></li>
-        <li><a href="#contact">Accredited · Ministry of Interior</a></li>
+      <div><h5 data-i18n="foot_h_contact">Get in touch</h5><ul>
+        <li><a href="#contact" data-i18n="foot_book">Book a consultation</a></li><li><a href="#contact" data-i18n="foot_loc">Doha, Qatar</a></li>
+        <li><a href="#contact" data-i18n="foot_accr">Accredited · Ministry of Interior</a></li>
       </ul></div>
     </div>
     <div class="footer__bottom">
-      <span>© <span id="yr"></span> RCH Qatar. All rights reserved.</span>
+      <span>© <span id="yr"></span> <span data-i18n="footer_rights">RCH Qatar. All rights reserved.</span></span>
       <span class="www">WWW.RCH.QA</span>
     </div>
   </div>
@@ -859,56 +883,286 @@ body{background:
     counters.forEach(function(el){ cio.observe(el); });
   }
 
-  // ===== Language switcher (mechanic only) =====
-  // Handles dir (RTL for Arabic), lang attribute, CJK/Arabic font loading, and
-  // EXAMPLE nav labels per language. Real content translation is out of scope for
-  // this mock (to be provided, or handled by Polylang in production).
+  // ===== Language switcher + i18n =====
+  // English lives in the HTML (SEO source of truth); we capture it as ORIG and
+  // swap textContent / innerHTML for the chosen language. AR/RU/FR/ZH below are
+  // professional STARTER translations — flag AR & ZH for native review.
   var langWrap = document.querySelector(".lang");
   var langBtn  = document.getElementById("langBtn");
   var langMenu = document.getElementById("langMenu");
   var langCur  = langWrap ? langWrap.querySelector(".lang__cur") : null;
   var options  = langMenu ? [].slice.call(langMenu.querySelectorAll("li")) : [];
   var RTL_LANGS = {ar:1};
-  // Example labels only — NOT a translation deliverable.
-  var LABELS = {
-    en:{about:"About",services:"Services",why:"Why RCH",cases:"Case studies",insights:"Insights",cta:"Get started"},
-    ar:{about:"نبذة",services:"الخدمات",why:"لماذا RCH",cases:"دراسات الحالة",insights:"رؤى",cta:"ابدأ الآن"},
-    ru:{about:"О нас",services:"Услуги",why:"Почему RCH",cases:"Кейсы",insights:"Аналитика",cta:"Начать"},
-    fr:{about:"À propos",services:"Services",why:"Pourquoi RCH",cases:"Études de cas",insights:"Analyses",cta:"Commencer"},
-    zh:{about:"关于",services:"服务",why:"为什么选择 RCH",cases:"案例研究",insights:"洞察",cta:"开始"}
-  };
-  var scLoaded = false;
-  function loadCJK(){
-    if(scLoaded) return; scLoaded = true;
-    var l=document.createElement("link"); l.rel="stylesheet";
-    l.href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap";
+
+  function loadFont(id, href){
+    if(document.getElementById(id)) return;
+    var l=document.createElement("link"); l.id=id; l.rel="stylesheet"; l.href=href;
     document.head.appendChild(l);
+  }
+  function ensureFont(code){
+    if(code==="ar") loadFont("f-ar","https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap");
+    if(code==="zh") loadFont("f-sc","https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap");
   }
   function openMenu(o){
     if(!langWrap) return;
     langWrap.setAttribute("aria-expanded", o ? "true":"false");
     langBtn.setAttribute("aria-expanded", o ? "true":"false");
-    if(o) loadCJK();
   }
+
+  // Capture English originals once (text or html per element).
+  var I18N_NODES = [].slice.call(document.querySelectorAll("[data-i18n],[data-i18n-html]"));
+  var ORIG = {};
+  I18N_NODES.forEach(function(el){
+    var html = el.hasAttribute("data-i18n-html");
+    var k = html ? el.getAttribute("data-i18n-html") : el.getAttribute("data-i18n");
+    if(!(k in ORIG)) ORIG[k] = html ? el.innerHTML : el.textContent;
+  });
+
+  var I18N = {
+    fr:{
+      about:"À propos",services:"Services",why:"Pourquoi RCH",cases:"Études de cas",insights:"Analyses",
+      cta_start:"Commencer",cta_explore:"Découvrir les services",cta_get_started:"Commencer",learn_more:"En savoir plus",
+      hero_eyebrow:"Services PRO · Création d’entreprise · Qatar",
+      hero_title:"Savoir local,<br><span class='accent'>portée mondiale.</span>",
+      hero_sub:"Votre partenaire stratégique pour les services PRO, l’immigration et la création d’entreprise au Qatar — pour que vous puissiez vous concentrer sur l’essentiel.",
+      hero_meta:"Accrédité par le ministère de l’Intérieur · Fondé en 2003",
+      stat1:"Présents au Qatar depuis",stat2:"Ans d’expertise locale",stat3:"Services gouvernementaux couverts",
+      ceo_quote:"« Nous aidons les dirigeants à gérer leur relation avec l’administration, <span class='mk'>pour qu’ils se concentrent sur l’essentiel.</span> »",
+      ceo_who:"<strong>Tayseer N. Malkawi</strong> · Directeur général, RCH Qatar",
+      about_eyebrow:"À propos",about_title:"Une société à responsabilité limitée, officiellement accréditée au Qatar depuis 2003.",
+      about_body:"RCH propose des services aux entreprises, des services PRO pour les employés, du partenariat, des services de support et du conseil d’affaires — portés par des professionnels qualifiés offrant des solutions gouvernementales fiables aux clients des secteurs privé et public. Nous œuvrons constamment à simplifier vos démarches avec l’administration.",
+      mission_k:"Notre mission",mission_h:"Se concentrer sur l’essentiel",
+      mission_p:"Aider les dirigeants et les entreprises à gérer leur relation avec l’administration, pour qu’ils se concentrent sur l’essentiel.",
+      vision_k:"Notre vision",vision_h:"L’exécution commence avec nous",
+      vision_p:"Offrir des services de relations gouvernementales de premier plan à l’esprit entrepreneurial. L’exécution commence avec nous.",
+      rapid_eyebrow:"Nos valeurs",rapid_title:"RAPID — notre façon de travailler",
+      val_r_h:"Fiabilité",val_r_p:"Nous sommes présents, à la hauteur de l’urgence.",
+      val_a_h:"Adaptabilité",val_a_p:"Des services sur mesure selon vos besoins.",
+      val_p_h:"Passion",val_p_p:"Des professionnels qui maîtrisent leurs services.",
+      val_i_h:"Immédiateté",val_i_p:"Votre temps est précieux, et nous le savons.",
+      val_d_h:"Détermination",val_d_p:"Quelqu’un pour faire avancer les choses.",
+      svc_eyebrow:"Ce que nous faisons",svc_title:"Tout ce qu’il faut pour lancer et opérer votre activité au Qatar.",
+      svc_body:"Une gamme complète de services conçue pour simplifier vos opérations et garantir une pleine conformité avec la réglementation qatarie.",
+      svc1_h:"Création d’entreprise",svc1_p:"Constitution de bout en bout, structurée pour les activités agréées et les investisseurs étrangers.",
+      svc1_i1:"Propriété étrangère à 100 % pour les activités agréées",svc1_i2:"Constitution de L.L.C. avec un partenaire qatari (51 %–49 %)",
+      svc1_i3:"Création de succursale pour les projets publics / semi-publics",svc1_i4:"Mise en place d’un bureau de représentation",
+      svc2_h:"Services PRO",svc2_p:"Gestion fiable de chaque démarche administrative, de bout en bout.",
+      svc2_i1:"Visas, permis de travail et résidence familiale",svc2_i2:"Attestation et légalisation de documents",
+      svc2_i3:"Licence commerciale et immatriculation",svc2_i4:"Approbations ministérielles et relations gouvernementales",
+      svc2_i5:"Travail, immigration & QID · transferts de sponsor",
+      svc3_h:"Partenariat",svc3_p:"Immatriculations, approbations et accompagnement partenarial durable.",
+      svc4_h:"Services de support",svc4_p:"Paie & WPS, comptabilité, fiscalité, conseil juridique et traduction certifiée.",
+      svc5_h:"Conseil d’affaires",svc5_p:"Prévisions, intelligence de marché, planification stratégique et évaluation d’entreprise.",
+      why_title:"Votre partenaire stratégique pour réussir",
+      why_body:"Nous simplifions vos opérations en gérant tous vos besoins PRO avec efficacité et fiabilité. Avec RCH Qatar, vous obtenez bien plus qu’un service — une équipe de professionnels dévoués à une fraction du coût d’une embauche interne. Nous ne fournissons pas seulement des services ; nous bâtissons des partenariats durables pour faire croître votre activité sereinement sur le marché qatari.",
+      fact1_h:"Rentable",fact1_p:"Couverture PRO complète à une fraction du coût interne.",
+      fact2_h:"Gain de temps",fact2_p:"Moins de tracas, une conformité assurée : concentrez-vous sur la croissance.",
+      fact3_h:"Réseau étendu",fact3_p:"Expertise et présence auprès de chaque ministère concerné.",
+      certs_eyebrow:"Certifiés & conformes",certs_title:"Qualité, sécurité et excellence — vérifiées.",
+      cert1_p:"Management de la qualité",cert2_p:"Sécurité de l’information",cert3_p:"Valeur nationale (ICV)",
+      cases_eyebrow:"Études de cas",cases_title:"Des résultats livrés pour nos clients au Qatar.",cat_compliance:"Conformité",
+      case1_h:"LLC détenue à 100 % par des étrangers, opérationnelle en quelques semaines",case1_p:"Structuration d’une entité entièrement étrangère pour une activité agréée, des approbations à la licence commerciale.",
+      case2_h:"Traitement groupé de visas & QID",case2_p:"Intégration d’une équipe entière avec visas de travail et QID dans des délais serrés.",
+      case3_h:"Zéro infraction en cours",case3_p:"Amendes gouvernementales évitées et régularisées grâce à un conseil de conformité proactif.",
+      clients_eyebrow:"Nos clients",clients_title:"La confiance des secteurs privé et public.",
+      blog_eyebrow:"Analyses",blog_title:"Des repères pour faire des affaires au Qatar.",
+      post1_h:"Créer une société détenue à 100 % par des étrangers au Qatar",post1_p:"Ce que la voie des activités agréées signifie pour les investisseurs, étape par étape.",
+      post2_h:"QID, visas et permis de travail sans tracas",post2_p:"Un guide pratique pour intégrer vos employés et rester conforme.",
+      post3_h:"Éviter les amendes et infractions",post3_p:"Comment un conseil proactif maintient votre entité en règle.",
+      footer_tag:"Savoir local, portée mondiale. Votre partenaire stratégique pour les services PRO et la création d’entreprise au Qatar.",
+      foot_h_services:"Services",foot_h_company:"Entreprise",foot_h_contact:"Contact",
+      foot_about:"À propos",foot_book:"Prendre rendez-vous",foot_loc:"Doha, Qatar",foot_accr:"Accrédité · Ministère de l’Intérieur",
+      footer_rights:"RCH Qatar. Tous droits réservés."
+    },
+    ru:{
+      about:"О нас",services:"Услуги",why:"Почему RCH",cases:"Кейсы",insights:"Аналитика",
+      cta_start:"Начать",cta_explore:"Смотреть услуги",cta_get_started:"Начать",learn_more:"Подробнее",
+      hero_eyebrow:"PRO-услуги · Регистрация компаний · Катар",
+      hero_title:"Локальная экспертиза,<br><span class='accent'>глобальный охват.</span>",
+      hero_sub:"Ваш стратегический партнёр по PRO-услугам, иммиграции и регистрации компаний в Катаре — чтобы вы могли сосредоточиться на главном.",
+      hero_meta:"Аккредитовано Министерством внутренних дел · Основано в 2003",
+      stat1:"В Катаре с",stat2:"Лет локальной экспертизы",stat3:"Государственных услуг",
+      ceo_quote:"«Мы помогаем руководителям выстраивать отношения с госорганами, <span class='mk'>чтобы они могли сосредоточиться на главном.</span>»",
+      ceo_who:"<strong>Тайсир Н. Малкави</strong> · Генеральный директор, RCH Qatar",
+      about_eyebrow:"О нас",about_title:"Общество с ограниченной ответственностью, официально аккредитованное в Катаре с 2003 года.",
+      about_body:"RCH предоставляет корпоративные услуги, PRO-услуги для сотрудников, партнёрство, услуги поддержки и бизнес-консалтинг — силами квалифицированных специалистов, обеспечивающих надёжные государственные решения для частного и государственного секторов. Мы постоянно упрощаем взаимодействие с государственными органами.",
+      mission_k:"Наша миссия",mission_h:"Сосредоточьтесь на главном",
+      mission_p:"Помогать руководителям и компаниям выстраивать отношения с госорганами, чтобы они могли сосредоточиться на главном.",
+      vision_k:"Наше видение",vision_h:"Исполнение начинается с нас",
+      vision_p:"Предоставлять первоклассные услуги по связям с государственными органами для предпринимателей. Исполнение начинается с нас.",
+      rapid_eyebrow:"Наши ценности",rapid_title:"RAPID — как мы работаем",
+      val_r_h:"Надёжность",val_r_p:"Мы рядом и действуем с учётом срочности.",
+      val_a_h:"Гибкость",val_a_p:"Индивидуальные услуги под ваши задачи.",
+      val_p_h:"Увлечённость",val_p_p:"Профессионалы, знающие свои услуги.",
+      val_i_h:"Оперативность",val_i_p:"Ваше время ценно, и мы это понимаем.",
+      val_d_h:"Целеустремлённость",val_d_p:"Тот, кто доводит дело до конца.",
+      svc_eyebrow:"Что мы делаем",svc_title:"Всё необходимое для запуска и работы бизнеса в Катаре.",
+      svc_body:"Полный спектр услуг для упрощения ваших операций и полного соответствия требованиям Катара.",
+      svc1_h:"Регистрация компаний",svc1_p:"Создание «под ключ» для разрешённых видов деятельности и иностранных инвесторов.",
+      svc1_i1:"100% иностранное владение для разрешённых видов деятельности",svc1_i2:"Регистрация L.L.C. с катарским партнёром (51%–49%)",
+      svc1_i3:"Открытие филиала для государственных / полугосударственных проектов",svc1_i4:"Открытие представительства",
+      svc2_h:"PRO-услуги",svc2_p:"Надёжное решение любых задач с госорганами, от начала до конца.",
+      svc2_i1:"Рабочие визы, разрешения и вид на жительство для семьи",svc2_i2:"Заверение и легализация документов",
+      svc2_i3:"Торговая лицензия и коммерческая регистрация",svc2_i4:"Согласования министерств и взаимодействие с госорганами",
+      svc2_i5:"Труд, иммиграция и QID · перевод спонсорства",
+      svc3_h:"Партнёрство",svc3_p:"Регистрации, согласования и долгосрочная партнёрская поддержка.",
+      svc4_h:"Услуги поддержки",svc4_p:"Расчёт зарплат и WPS, бухгалтерия, налоги, юридические консультации и заверенный перевод.",
+      svc5_h:"Бизнес-консалтинг",svc5_p:"Прогнозирование, анализ рынка, стратегическое планирование и оценка компании.",
+      why_title:"Ваш стратегический партнёр для успеха",
+      why_body:"Мы упрощаем ваши операции, надёжно и эффективно закрывая все PRO-задачи. С RCH Qatar вы получаете больше, чем услугу — команду преданных профессионалов за долю стоимости штатного найма. Мы не просто оказываем услуги; мы строим долгосрочные партнёрства, помогая вашему бизнесу уверенно расти на рынке Катара.",
+      fact1_h:"Экономично",fact1_p:"Полное покрытие PRO за долю стоимости штата.",
+      fact2_h:"Экономия времени",fact2_p:"Меньше хлопот и полное соответствие — сосредоточьтесь на росте.",
+      fact3_h:"Широкая сеть",fact3_p:"Экспертиза и связи во всех профильных министерствах.",
+      certs_eyebrow:"Сертифицировано и соответствует",certs_title:"Качество, безопасность и совершенство — подтверждены.",
+      cert1_p:"Менеджмент качества",cert2_p:"Информационная безопасность",cert3_p:"Внутристрановая ценность (ICV)",
+      cases_eyebrow:"Кейсы",cases_title:"Результаты, которых мы добились для клиентов в Катаре.",cat_compliance:"Комплаенс",
+      case1_h:"Компания со 100% иностранным владением — запуск за недели",case1_p:"Структурирование полностью иностранной компании для разрешённой деятельности: от согласований до торговой лицензии.",
+      case2_h:"Массовое оформление виз и QID",case2_p:"Оформили визы и QID для целой команды в сжатые сроки.",
+      case3_h:"Ноль открытых нарушений",case3_p:"Штрафы устранены и предотвращены благодаря проактивному комплаенс-консалтингу.",
+      clients_eyebrow:"Наши клиенты",clients_title:"Нам доверяют частный и государственный секторы.",
+      blog_eyebrow:"Аналитика",blog_title:"Ориентиры для ведения бизнеса в Катаре.",
+      post1_h:"Регистрация компании со 100% иностранным владением в Катаре",post1_p:"Что путь разрешённой деятельности означает для инвесторов, шаг за шагом.",
+      post2_h:"QID, визы и разрешения на работу без хлопот",post2_p:"Практическое руководство по оформлению сотрудников и соблюдению требований.",
+      post3_h:"Как избежать штрафов и нарушений",post3_p:"Как проактивный консалтинг сохраняет вашу компанию в порядке.",
+      footer_tag:"Локальная экспертиза, глобальный охват. Ваш стратегический партнёр по PRO-услугам и регистрации компаний в Катаре.",
+      foot_h_services:"Услуги",foot_h_company:"Компания",foot_h_contact:"Контакты",
+      foot_about:"О нас",foot_book:"Записаться на консультацию",foot_loc:"Доха, Катар",foot_accr:"Аккредитовано · МВД",
+      footer_rights:"RCH Qatar. Все права защищены."
+    },
+    ar:{
+      about:"من نحن",services:"الخدمات",why:"لماذا RCH",cases:"دراسات الحالة",insights:"رؤى",
+      cta_start:"ابدأ الآن",cta_explore:"استكشف الخدمات",cta_get_started:"ابدأ الآن",learn_more:"اعرف المزيد",
+      hero_eyebrow:"خدمات المعاملات الحكومية · تأسيس الشركات · قطر",
+      hero_title:"معرفة محلية،<br><span class='accent'>حضور عالمي.</span>",
+      hero_sub:"شريكك الاستراتيجي لخدمات المعاملات الحكومية والهجرة وتأسيس الشركات في قطر — لتتفرّغ لما يهمّك.",
+      hero_meta:"معتمدون من وزارة الداخلية · تأسست عام 2003",
+      stat1:"في قطر منذ",stat2:"عاماً من الخبرة المحلية",stat3:"خدمة حكومية نغطيها",
+      ceo_quote:"«نساعد قادة الأعمال على إدارة علاقتهم بالجهات الحكومية، <span class='mk'>ليتفرّغوا لما يهمّهم حقاً.</span>»",
+      ceo_who:"<strong>تيسير ن. الملكاوي</strong> · الرئيس التنفيذي، RCH قطر",
+      about_eyebrow:"من نحن",about_title:"شركة ذات مسؤولية محدودة، معتمدة رسمياً في قطر منذ عام 2003.",
+      about_body:"تقدّم RCH الخدمات المؤسسية وخدمات المعاملات الحكومية للموظفين والشراكات والخدمات المساندة والاستشارات — عبر كوادر محترفة تقدّم حلولاً حكومية موثوقة لعملاء القطاعين الخاص والعام. ونسعى دائماً لتبسيط تعاملاتك مع الجهات الحكومية.",
+      mission_k:"مهمتنا",mission_h:"التركيز على ما يهم",
+      mission_p:"مساعدة قادة الأعمال والشركات على إدارة علاقتهم بالجهات الحكومية، ليتفرّغوا لما يهمّهم.",
+      vision_k:"رؤيتنا",vision_h:"التنفيذ يبدأ منّا",
+      vision_p:"تقديم خدمات علاقات حكومية من الطراز الأول للعقل الريادي. التنفيذ يبدأ منّا.",
+      rapid_eyebrow:"قيمنا الأساسية",rapid_title:"RAPID — أسلوبنا في العمل",
+      val_r_h:"الموثوقية",val_r_p:"نكون حاضرين على قدر إلحاح الموقف.",
+      val_a_h:"المرونة",val_a_p:"خدمات مصمّمة وفق احتياجاتك.",
+      val_p_h:"الشغف",val_p_p:"محترفون يتقنون الخدمات التي يقدّمونها.",
+      val_i_h:"الفورية",val_i_p:"وقتك ثمين، ونحن ندرك ذلك.",
+      val_d_h:"العزيمة",val_d_p:"من ينجز الأمور فعلاً.",
+      svc_eyebrow:"ما نقدّمه",svc_title:"كل ما يحتاجه عملك لإطلاق أعماله وتشغيلها في قطر.",
+      svc_body:"باقة متكاملة من الخدمات لتبسيط عملياتك وضمان الامتثال الكامل للأنظمة القطرية.",
+      svc1_h:"تأسيس الشركات",svc1_p:"تأسيس متكامل مُهيكل للأنشطة المعتمدة والمستثمرين الأجانب.",
+      svc1_i1:"ملكية أجنبية 100% للأنشطة المعتمدة",svc1_i2:"تأسيس ش.ذ.م.م بشريك قطري (51%–49%)",
+      svc1_i3:"تأسيس فرع للمشاريع الحكومية وشبه الحكومية",svc1_i4:"إنشاء مكتب تمثيلي",
+      svc2_h:"خدمات المعاملات الحكومية",svc2_p:"إدارة موثوقة لكل معاملة حكومية من البداية للنهاية.",
+      svc2_i1:"تأشيرات العمل وتصاريحه وإقامات العائلة",svc2_i2:"تصديق المستندات وتوثيقها",
+      svc2_i3:"الرخصة التجارية والسجل التجاري",svc2_i4:"موافقات الوزارات والتنسيق الحكومي",
+      svc2_i5:"العمل والهجرة والبطاقة الشخصية · نقل الكفالة",
+      svc3_h:"الشراكات",svc3_p:"التسجيلات والموافقات ودعم الشراكات طويلة الأمد.",
+      svc4_h:"الخدمات المساندة",svc4_p:"الرواتب ونظام حماية الأجور، والمحاسبة والضرائب والاستشارات القانونية والترجمة المعتمدة.",
+      svc5_h:"الاستشارات",svc5_p:"التنبؤ وذكاء السوق والتخطيط الاستراتيجي وتقييم الشركات.",
+      why_title:"شريكك الاستراتيجي لتحقيق النجاح",
+      why_body:"نبسّط عملياتك عبر إدارة جميع احتياجاتك من المعاملات الحكومية بكفاءة وموثوقية. مع RCH قطر تحصل على أكثر من خدمة — فريق من المحترفين المتفانين بجزء بسيط من تكلفة التوظيف الداخلي. نحن لا نقدّم خدمات فحسب؛ بل نبني شراكات طويلة الأمد تساعد عملك على النمو بثبات وثقة في السوق القطري.",
+      fact1_h:"فعّالة التكلفة",fact1_p:"تغطية كاملة للمعاملات بجزء من تكلفة الفريق الداخلي.",
+      fact2_h:"توفير الوقت",fact2_p:"نقلّل العناء ونضمن الامتثال، لتتفرّغ للنمو.",
+      fact3_h:"شبكة واسعة",fact3_p:"خبرة وحضور لدى كل وزارة ذات صلة.",
+      certs_eyebrow:"معتمدون وملتزمون",certs_title:"الجودة والأمن والتميّز — موثّقة.",
+      cert1_p:"إدارة الجودة",cert2_p:"أمن المعلومات",cert3_p:"القيمة المحلية المضافة (ICV)",
+      cases_eyebrow:"دراسات الحالة",cases_title:"نتائج حقّقناها لعملائنا في قطر.",cat_compliance:"الامتثال",
+      case1_h:"شركة بملكية أجنبية 100% جاهزة خلال أسابيع",case1_p:"هيكلة كيان مملوك بالكامل للأجانب لنشاط معتمد، من الموافقات حتى الرخصة التجارية.",
+      case2_h:"معالجة جماعية للتأشيرات والبطاقات الشخصية",case2_p:"استقدام فريق كامل بتأشيرات عمل وبطاقات شخصية ضمن جدول زمني ضيّق.",
+      case3_h:"صفر مخالفات قائمة",case3_p:"تسوية الغرامات الحكومية وتفاديها عبر استشارات امتثال استباقية.",
+      clients_eyebrow:"عملاؤنا",clients_title:"ثقة القطاعين الخاص والعام.",
+      blog_eyebrow:"رؤى",blog_title:"إرشادات لممارسة الأعمال في قطر.",
+      post1_h:"تأسيس شركة بملكية أجنبية 100% في قطر",post1_p:"ماذا يعني مسار الأنشطة المعتمدة للمستثمرين، خطوة بخطوة.",
+      post2_h:"البطاقة الشخصية والتأشيرات وتصاريح العمل بلا عناء",post2_p:"دليل عملي لاستقدام الموظفين والبقاء ممتثلاً.",
+      post3_h:"تفادي الغرامات والمخالفات الحكومية",post3_p:"كيف تحافظ الاستشارات الاستباقية على كيانك في وضع سليم.",
+      footer_tag:"معرفة محلية، حضور عالمي. شريكك الاستراتيجي لخدمات المعاملات الحكومية وتأسيس الشركات في قطر.",
+      foot_h_services:"الخدمات",foot_h_company:"الشركة",foot_h_contact:"تواصل معنا",
+      foot_about:"من نحن",foot_book:"احجز استشارة",foot_loc:"الدوحة، قطر",foot_accr:"معتمدون · وزارة الداخلية",
+      footer_rights:"RCH قطر. جميع الحقوق محفوظة."
+    },
+    zh:{
+      about:"关于我们",services:"服务",why:"为何选择 RCH",cases:"案例",insights:"洞察",
+      cta_start:"立即开始",cta_explore:"浏览服务",cta_get_started:"立即开始",learn_more:"了解更多",
+      hero_eyebrow:"政府事务服务 · 公司注册 · 卡塔尔",
+      hero_title:"本地专长，<br><span class='accent'>全球视野。</span>",
+      hero_sub:"您在卡塔尔办理政府事务、移民与公司注册的战略伙伴——让您专注于真正重要的事。",
+      hero_meta:"经内政部认证 · 成立于 2003 年",
+      stat1:"扎根卡塔尔",stat2:"年本地经验",stat3:"项政府服务",
+      ceo_quote:"“我们帮助企业领导者处理与政府的关系，<span class='mk'>让他们专注于真正重要的事。</span>”",
+      ceo_who:"<strong>Tayseer N. Malkawi</strong> · RCH 卡塔尔首席执行官",
+      about_eyebrow:"关于我们",about_title:"一家自 2003 年起在卡塔尔正式认证的有限责任公司。",
+      about_body:"RCH 提供企业服务、员工政府事务服务、合作伙伴、支持服务与商业咨询——由专业团队为公共和私营部门客户提供可靠的政府解决方案。我们始终致力于让您与政府的往来更简单。",
+      mission_k:"我们的使命",mission_h:"专注真正重要的事",
+      mission_p:"帮助企业领导者与公司处理与政府的关系，让他们专注于真正重要的事。",
+      vision_k:"我们的愿景",vision_h:"执行，从我们开始",
+      vision_p:"为具有企业家精神的客户提供一流的政府关系服务。执行，从我们开始。",
+      rapid_eyebrow:"我们的核心价值",rapid_title:"RAPID——我们的工作方式",
+      val_r_h:"可靠",val_r_p:"我们随时到位，应对紧急需求。",
+      val_a_h:"灵活",val_a_p:"根据您的需求量身定制服务。",
+      val_p_h:"热忱",val_p_p:"精通所提供服务的专业人员。",
+      val_i_h:"及时",val_i_p:"您的时间宝贵，我们深知这一点。",
+      val_d_h:"坚定",val_d_p:"总有人把事情办成。",
+      svc_eyebrow:"我们的服务",svc_title:"在卡塔尔启动并运营业务所需的一切。",
+      svc_body:"全面的服务组合，简化您的运营并确保完全符合卡塔尔法规。",
+      svc1_h:"公司注册",svc1_p:"端到端设立，专为核准业务与外国投资者设计。",
+      svc1_i1:"核准业务可享 100% 外资所有权",svc1_i2:"与卡塔尔合伙人成立有限责任公司（51%–49%）",
+      svc1_i3:"为政府 / 半政府项目设立分公司",svc1_i4:"设立代表处",
+      svc2_h:"政府事务服务",svc2_p:"端到端可靠办理每一项政府事务。",
+      svc2_i1:"工作签证、工作许可及家属居留办理",svc2_i2:"文件认证与合法化",
+      svc2_i3:"营业执照与商业注册",svc2_i4:"部委审批与政府联络",
+      svc2_i5:"劳工、移民与 QID · 担保转移",
+      svc3_h:"合作伙伴",svc3_p:"注册、审批与长期合作支持。",
+      svc4_h:"支持服务",svc4_p:"薪酬与 WPS、会计、税务、法律咨询及认证翻译。",
+      svc5_h:"商业咨询",svc5_p:"预测、市场情报、战略规划与公司估值。",
+      why_title:"助您成功的战略伙伴",
+      why_body:"我们高效可靠地管理您全部的政府事务需求，简化运营。选择 RCH 卡塔尔，您获得的不仅是服务——而是一支敬业的专业团队，成本仅为自建团队的一小部分。我们不止提供服务，更建立长期合作，助力您的业务在卡塔尔市场稳健自信地成长。",
+      fact1_h:"高性价比",fact1_p:"以自建团队的零头获得完整政府事务覆盖。",
+      fact2_h:"节省时间",fact2_p:"减少烦扰、确保合规，让您专注增长。",
+      fact3_h:"广泛网络",fact3_p:"覆盖各相关部委的深厚专长与人脉。",
+      certs_eyebrow:"已认证 · 合规",certs_title:"品质、安全与卓越——经过验证。",
+      cert1_p:"质量管理",cert2_p:"信息安全",cert3_p:"本地价值（ICV）",
+      cases_eyebrow:"案例",cases_title:"我们为卡塔尔客户交付的成果。",cat_compliance:"合规",
+      case1_h:"100% 外资 LLC，数周内投入运营",case1_p:"为核准业务搭建完全外资实体，从审批到营业执照一站到位。",
+      case2_h:"批量办理签证与 QID",case2_p:"在紧张的时间内为整个团队办理工作签证与 QID。",
+      case3_h:"零未决违规",case3_p:"通过主动合规咨询清理并预防政府罚款。",
+      clients_eyebrow:"我们的客户",clients_title:"深受公共与私营部门信赖。",
+      blog_eyebrow:"洞察",blog_title:"在卡塔尔开展业务的指南。",
+      post1_h:"在卡塔尔设立 100% 外资公司",post1_p:"核准业务路径对投资者意味着什么，逐步解析。",
+      post2_h:"轻松搞定 QID、签证与工作许可",post2_p:"员工入职与保持合规的实用指南。",
+      post3_h:"避免政府罚款与违规",post3_p:"主动咨询如何让您的实体保持良好状态。",
+      footer_tag:"本地专长，全球视野。您在卡塔尔办理政府事务与公司注册的战略伙伴。",
+      foot_h_services:"服务",foot_h_company:"公司",foot_h_contact:"联系我们",
+      foot_about:"关于我们",foot_book:"预约咨询",foot_loc:"卡塔尔，多哈",foot_accr:"已认证 · 内政部",
+      footer_rights:"RCH 卡塔尔。保留所有权利。"
+    }
+  };
+
+  function applyLang(code){
+    var dict = I18N[code] || {};
+    I18N_NODES.forEach(function(el){
+      var html = el.hasAttribute("data-i18n-html");
+      var k = html ? el.getAttribute("data-i18n-html") : el.getAttribute("data-i18n");
+      var val = (code==="en") ? ORIG[k] : (k in dict ? dict[k] : ORIG[k]);
+      if(val==null) return;
+      if(html) el.innerHTML = val; else el.textContent = val;
+    });
+  }
+
   function setLang(code){
     var rtl = !!RTL_LANGS[code];
+    ensureFont(code);
     document.documentElement.dir = rtl ? "rtl" : "ltr";
     document.documentElement.lang = code;
-    if(code==="zh") loadCJK();
-    // reflect selection
     options.forEach(function(li){
       var on = li.getAttribute("data-lang")===code;
       li.setAttribute("aria-selected", on ? "true":"false");
       if(on && langCur) langCur.textContent = li.getAttribute("data-code");
     });
-    // example labels (nav links + CTA)
-    var dict = LABELS[code] || LABELS.en;
-    document.querySelectorAll("[data-i18n]").forEach(function(el){
-      var k = el.getAttribute("data-i18n"); if(dict[k]) el.textContent = dict[k];
-    });
-    var cta = document.querySelector('.nav__side .btn--primary');
-    if(cta){ var ico = cta.querySelector('svg'); cta.childNodes[0].nodeValue = dict.cta + " "; if(ico) cta.appendChild(ico); }
-    // keep the demo RTL chip in sync
+    applyLang(code);
     var rtlChip = document.getElementById("ctl-rtl"); if(rtlChip) rtlChip.classList.toggle("on", rtl);
   }
   if(langBtn){
@@ -933,13 +1187,14 @@ body{background:
     var on = !document.body.classList.contains("reduced");
     document.body.classList.toggle("reduced", on);
     this.classList.toggle("on", on);
-    if(on && window.__rchLogo3D) window.__rchLogo3D.stop();
-    else if(window.__rchLogo3D) window.__rchLogo3D.start();
+    // Reduce motion -> hide the plane cursor and restore the system cursor.
+    if(on && window.__rchLogo3D && window.__rchLogo3D.deactivate) window.__rchLogo3D.deactivate();
+    // (turning it back off: the next mouse move re-activates the plane cursor)
   });
 })();
 </script>
 
-<!-- ============ Three.js scroll-driven 3D paper plane (production: rch-logo-3d.js) ============ -->
+<!-- ============ Three.js 3D paper-plane cursor (production: rch-logo-3d.js) ============ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
@@ -948,34 +1203,20 @@ body{background:
   var frame = document.getElementById("rch-plane-flight");
   var mount = frame ? frame.querySelector(".pf__canvas") : null;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
 
-  // WebGL support test
   function webglOK(){
     try{ var c=document.createElement("canvas");
       return !!(window.WebGLRenderingContext && (c.getContext("webgl")||c.getContext("experimental-webgl"))); }
     catch(e){ return false; }
   }
-  // No WebGL / no Three.js → static fallback image (positioned by CSS place below).
-  if(!frame || !mount || typeof THREE === "undefined" || !webglOK()){
-    document.body.classList.add("no-webgl");
-    placeStatic();
+  // The plane becomes the cursor ONLY on a real mouse + WebGL + motion allowed.
+  // Touch / no-WebGL / reduced-motion -> no plane, the system cursor stays (the frame
+  // is display:none until body.rch-cursor is added, and we never add it here).
+  if(!frame || !mount || typeof THREE === "undefined" || !webglOK() || !finePointer || reduce
+     || document.body.classList.contains("reduced")){
     return;
   }
-  // Under reduced-motion we still show the plane, but STATIC (one frame, no scroll drive).
-  var reduceMode = reduce || document.body.classList.contains("reduced");
-
-  // Position the fixed flight frame along a "flight lane" for a given scroll progress p.
-  function placeFrame(p, driftPhase){
-    if(!frame) return;
-    var vw = window.innerWidth, vh = window.innerHeight;
-    var fw = frame.offsetWidth, fh = frame.offsetHeight;
-    var laneX = vw < 768 ? 0.76 : 0.90;              // right gutter lane (fraction of viewport)
-    var drift = Math.sin((driftPhase||0)) * (vw < 768 ? 8 : 14);
-    var x = laneX * vw - fw/2 + drift;
-    var y = (0.20 + p * 0.60) * vh - fh/2;           // starts below the nav, descends as you scroll
-    frame.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)";
-  }
-  function placeStatic(){ placeFrame(0.12, 0); }
 
   // GLB source: relative asset by default; a self-contained build sets window.__RCH_GLB__ to a data URI.
   var GLB_SRC = window.__RCH_GLB__ || "assets/rch-logo.glb";
@@ -990,17 +1231,28 @@ body{background:
   if(renderer.outputEncoding !== undefined){ renderer.outputEncoding = THREE.sRGBEncoding; }
   mount.appendChild(renderer.domElement);
 
-  // Lighting: key + fill (indigo-tinted) + ambient + accent rim (Saudi palette)
-  scene.add(new THREE.AmbientLight(0xffffff, 0.68));
+  // Lighting: key + navy fill + ambient + magenta rim (RCH palette)
+  scene.add(new THREE.AmbientLight(0xffffff, 0.70));
   var key = new THREE.DirectionalLight(0xffffff, 1.35); key.position.set(2.5, 3, 3); scene.add(key);
-  var fill = new THREE.DirectionalLight(0x293d81, 0.9); fill.position.set(-3, -1, 1.5); scene.add(fill);
-  var rim = new THREE.DirectionalLight(0xAF1882, 0.6); rim.position.set(-1.5, 2, -3); scene.add(rim);
+  var fill = new THREE.DirectionalLight(0x1A3A5C, 0.9); fill.position.set(-3, -1, 1.5); scene.add(fill);
+  var rim = new THREE.DirectionalLight(0xD6286B, 0.6); rim.position.set(-1.5, 2, -3); scene.add(rim);
 
-  // Base heading so the plane reads as flying forward/down along the lane.
-  var BASE_RX = -0.32, BASE_RY = -0.6, BASE_RZ = 0.14;
+  var BASE_RX = -0.22, BASE_RY = -0.5, BASE_RZ = 0.08;
   var pivot = new THREE.Group(); scene.add(pivot);
   pivot.rotation.set(BASE_RX, BASE_RY, BASE_RZ);
-  var model = null, running = false, rafId = null;
+  var model = null, running = false, rafId = null, active = false, seen = false, loaded = false;
+
+  // pointer target (tx,ty) + eased plane position (px,py) + smoothed velocity (vx,vy)
+  var tx = window.innerWidth * 0.5, ty = window.innerHeight * 0.4, px = tx, py = ty;
+  var vx = 0, vy = 0, bank = 0, pitch = 0, phase = 0, idleT = 0;
+
+  function place(){
+    var fw = frame.offsetWidth, fh = frame.offsetHeight;
+    frame.style.transform = "translate(" + (px - fw/2).toFixed(1) + "px," + (py - fh/2).toFixed(1) + "px)";
+  }
+  function allowed(){ return !document.body.classList.contains("reduced"); }
+  function activate(){ if(active || !loaded || !allowed()) return; active = true; document.body.classList.add("rch-cursor"); start(); }
+  function deactivate(){ active = false; document.body.classList.remove("rch-cursor"); stop(); }
 
   var loader = new THREE.GLTFLoader();
   loader.load(GLB_SRC, function(gltf){
@@ -1021,63 +1273,56 @@ body{background:
     var maxDim = Math.max(size.x, size.y, size.z) || 1;
     model.scale.setScalar(2.7 / maxDim);
     pivot.add(model);
-    resize();
-    if(reduceMode){ placeStatic(); renderer.render(scene, camera); }  // one static frame, no motion
-    else { onScroll(); start(); }
+    loaded = true; resize();
+    if(seen) activate();   // pointer already moved before the model finished loading
   }, undefined, function(err){
-    console.warn("RCH plane: model failed to load, showing fallback.", err);
-    document.body.classList.add("no-webgl"); placeStatic(); cleanup();
+    console.warn("RCH plane cursor: model failed to load.", err); cleanup();
   });
 
-  // ---- Scroll-driven flight state ----
-  var pTarget = 0, driftPhase = 0, vel = 0, lastP = 0;
-  var bank = 0, pitch = 0, phase = 0, idleT = 0, lastT = 0;
-  function scrollP(){
-    var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
-    return max > 0 ? h.scrollTop / max : 0;
-  }
-  function isRed(){ return reduceMode || document.body.classList.contains("reduced"); }
-  function onScroll(){ pTarget = scrollP(); if(!isRed()) start(); }
+  // ---- Pointer drive ----
+  window.addEventListener("pointermove", function(e){
+    if(e.pointerType === "touch") return;         // ignore touch input
+    tx = e.clientX; ty = e.clientY;
+    if(!seen){ seen = true; px = tx; py = ty; }    // snap on first move (no fly-in from origin)
+    if(!allowed()){ if(active) deactivate(); return; }
+    activate(); start();
+  }, {passive:true});
+  // A touch tap disables the plane cursor for the session (hybrid devices).
+  window.addEventListener("pointerdown", function(e){ if(e.pointerType === "touch") deactivate(); });
+  document.addEventListener("mouseleave", function(){ frame.style.opacity = "0"; });
+  document.addEventListener("mouseenter", function(){ frame.style.opacity = "1"; });
 
   var clock = new THREE.Clock();
-  function render(now){
+  function render(){
     if(!running) return;
     rafId = requestAnimationFrame(render);
     var dt = Math.min(clock.getDelta(), 0.05);
 
-    // velocity of scroll progress
-    var dp = pTarget - lastP; lastP = pTarget;
-    var instVel = dt > 0 ? dp / dt : 0;
-    vel += (instVel - vel) * 0.2;
-    var speed = Math.abs(vel);
-    var rtl = document.documentElement.dir === "rtl";
-    var dir = rtl ? -1 : 1;
+    var dx = tx - px, dy = ty - py;
+    px += dx * 0.18; py += dy * 0.18;              // eased follow (smoothing)
+    place();
 
-    // move the frame down its lane; gentle organic drift + flutter grows with speed
-    driftPhase += dt * (0.6 + speed * 8);
-    placeFrame(pTarget, driftPhase);
+    vx += (dx - vx) * 0.25; vy += (dy - vy) * 0.25;  // smoothed velocity
+    var speed = Math.min(Math.sqrt(vx*vx + vy*vy) / 60, 1);
+    var bankT  = Math.max(-0.6, Math.min(0.6,  vx * 0.010));   // roll into horizontal motion
+    var pitchT = Math.max(-0.4, Math.min(0.4, -vy * 0.008));   // pitch with vertical motion
+    bank  += (bankT  - bank ) * 0.12;
+    pitch += (pitchT - pitch) * 0.10;
+    phase += dt * (2 + speed * 30);
+    var bob = Math.sin(phase) * 0.04 * (0.4 + speed);          // micro-oscillation in flight
 
-    // banking / pitch from velocity, micro-oscillation, settle at rest
-    var bankT  = Math.max(-0.5, Math.min(0.5, vel * 22)) * dir;
-    var pitchT = Math.max(-0.35, Math.min(0.35, -vel * 16));
-    bank  += (bankT  - bank ) * 0.10;
-    pitch += (pitchT - pitch) * 0.09;
-    var amp = Math.min(speed * 90, 1);
-    phase += dt * (2 + speed * 60);
-    var bob = Math.sin(phase) * 0.05 * (0.4 + amp);
-
-    pivot.rotation.z = BASE_RZ + bank + Math.sin(phase*1.3) * amp * 0.06;
+    pivot.rotation.z = BASE_RZ + bank + Math.sin(phase*1.3) * speed * 0.05;
     pivot.rotation.x = BASE_RX + pitch + bob;
     pivot.rotation.y = BASE_RY;
 
     renderer.render(scene, camera);
 
-    // idle-pause: once settled and no scrolling, stop the loop until next scroll
-    if(speed < 0.0004 && Math.abs(bank) < 0.01 && Math.abs(pitch) < 0.01){
-      idleT += dt; if(idleT > 0.8){ stop(); }
+    // idle-pause once the pointer is still and the craft has settled
+    if(speed < 0.002 && Math.abs(dx) < 0.4 && Math.abs(dy) < 0.4 && Math.abs(bank) < 0.01 && Math.abs(pitch) < 0.01){
+      idleT += dt; if(idleT > 0.5){ stop(); }
     } else idleT = 0;
   }
-  function start(){ if(running || isRed()) return; running = true; clock.getDelta(); lastP = pTarget; rafId = requestAnimationFrame(render); }
+  function start(){ if(running || !active) return; running = true; clock.getDelta(); rafId = requestAnimationFrame(render); }
   function stop(){ running = false; if(rafId) cancelAnimationFrame(rafId); rafId = null; }
 
   function resize(){
@@ -1085,15 +1330,13 @@ body{background:
     if(!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w/h; camera.updateProjectionMatrix();
-    if(reduceMode){ placeStatic(); if(model) renderer.render(scene, camera); }
-    else placeFrame(pTarget, driftPhase);
+    place(); if(model && !running) renderer.render(scene, camera);
   }
-  window.addEventListener("scroll", onScroll, {passive:true});
   window.addEventListener("resize", resize);
-  document.addEventListener("visibilitychange", function(){ if(document.hidden) stop(); else if(!isRed()) start(); });
+  document.addEventListener("visibilitychange", function(){ if(document.hidden) stop(); else if(active) start(); });
 
   function cleanup(){
-    stop();
+    deactivate();
     window.removeEventListener("resize", resize);
     if(model) model.traverse(function(o){
       if(o.isMesh){ if(o.geometry) o.geometry.dispose();
@@ -1104,7 +1347,8 @@ body{background:
     if(renderer){ renderer.dispose(); if(renderer.domElement && renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement); }
   }
 
-  window.__rchLogo3D = { start:start, stop:stop, cleanup:cleanup };
+  // Exposed for the demo "Reduce motion" toggle (deactivate = hide plane + restore cursor).
+  window.__rchLogo3D = { start:start, stop:stop, deactivate:deactivate, cleanup:cleanup };
 })();
 </script>
 </body>
